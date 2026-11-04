@@ -1,0 +1,32 @@
+name: Scout checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python: ['3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Behavioral tests
+        run: python -m unittest discover -s tests -v
+      - name: Generate and verify demonstration reports
+        run: python scripts/check_demos.py
+      - name: Replay JavaScript syntax
+        run: node --check runs/deviations.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scout-reports-${{ matrix.os }}-${{ matrix.python }}
+          path: runs/

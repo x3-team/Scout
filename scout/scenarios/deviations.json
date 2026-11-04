@@ -1,0 +1,42 @@
+{
+  "name": "deviations",
+  "width": 3,
+  "height": 2.4,
+  "start": {
+    "x": 0.6,
+    "y": 0.6,
+    "heading": 0
+  },
+  "stations": [
+    {
+      "id": "A",
+      "x": 2.4,
+      "y": 0.6
+    },
+    {
+      "id": "B",
+      "x": 2.4,
+      "y": 1.8,
+      "deviations": [
+        "prepared_extra_box"
+      ]
+    },
+    {
+      "id": "C",
+      "x": 0.6,
+      "y": 1.8,
+      "deviations": [
+        "prepared_missing_item"
+      ]
+    }
+  ],
+  "obstacles": [
+    {
+      "id": "shelf",
+      "x": 1.1,
+      "y": 1,
+      "width": 0.7,
+      "height": 0.4
+    }
+  ]
+}

@@ -32,6 +32,31 @@ jobs:
           name: scout-reports-${{ matrix.os }}-${{ matrix.python }}
           path: runs/
 
+  vision:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python: ['3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install optional CPU vision dependencies
+        run: python -m pip install --only-binary=:all: -r requirements-vision.txt
+      - name: Pixel inspection and held-out evaluation tests
+        run: python -m unittest discover -s vision_tests -v
+      - name: Generate clearly synthetic image reports and printable board
+        run: python scripts/check_vision_demos.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scout-vision-${{ matrix.os }}-${{ matrix.python }}
+          path: runs/vision/
+
   browser:
     runs-on: ubuntu-24.04
     timeout-minutes: 10

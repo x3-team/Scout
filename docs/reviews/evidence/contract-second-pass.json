@@ -1,0 +1,143 @@
+{
+  "kind": "integration-contract-review",
+  "schema_version": "scout-skillforge/0.1-draft.2",
+  "reviewed_source_ref": "a880fac2d17a3eae541945640ee5a1d72d6cf202",
+  "schema_sha256": "ae1763a89fc147ee33d1c750736965a8e25473e7ec43316ac58da2e0bb5904e9",
+  "R1_final_command_step_positive_control_passed": true,
+  "findings": [
+    {
+      "name": "R2-result-reused-for-other-target",
+      "group": "R2",
+      "kind": "exchange",
+      "changes": [
+        [
+          "observation.target.id",
+          "B"
+        ]
+      ],
+      "observed": "accept",
+      "required_in_next_revision": "reject",
+      "error": null
+    },
+    {
+      "name": "R2-later-segment-local-step-count",
+      "group": "R2",
+      "kind": "exchange",
+      "changes": [
+        [
+          "previous_step",
+          299
+        ],
+        [
+          "observation.step",
+          300
+        ],
+        [
+          "observation.time_s",
+          15
+        ],
+        [
+          "observation.sampled_at_s",
+          15
+        ],
+        [
+          "command.step",
+          300
+        ],
+        [
+          "command.expires_after_step",
+          301
+        ],
+        [
+          "result.metrics.steps",
+          20
+        ],
+        [
+          "result.metrics.duration_s",
+          1
+        ],
+        [
+          "result.metrics.distance_m",
+          0.1
+        ]
+      ],
+      "observed": "reject",
+      "required_in_next_revision": "accept",
+      "error": "result precedes observation"
+    },
+    {
+      "name": "R2-terminal-observation-at-budget",
+      "group": "R2",
+      "kind": "observation",
+      "changes": [
+        [
+          "observation.step",
+          3600
+        ],
+        [
+          "observation.time_s",
+          180
+        ],
+        [
+          "observation.sampled_at_s",
+          180
+        ]
+      ],
+      "observed": "reject",
+      "required_in_next_revision": "accept",
+      "error": "oneOf mismatch"
+    },
+    {
+      "name": "R4-measured-claim-without-manifest",
+      "group": "R4",
+      "kind": "exchange",
+      "changes": [
+        [
+          "result.execution",
+          "digital_simulation"
+        ]
+      ],
+      "observed": "accept",
+      "required_in_next_revision": "reject",
+      "error": null
+    },
+    {
+      "name": "SCOUT-C1-completed-with-sensor-fault-reason",
+      "group": "SCOUT-C1",
+      "kind": "exchange",
+      "changes": [
+        [
+          "result.reason",
+          "SENSOR_UNAVAILABLE"
+        ]
+      ],
+      "observed": "accept",
+      "required_in_next_revision": "reject",
+      "error": null
+    },
+    {
+      "name": "SCOUT-C1-timeout-with-goal-reached-reason",
+      "group": "SCOUT-C1",
+      "kind": "exchange",
+      "changes": [
+        [
+          "result.status",
+          "timeout"
+        ]
+      ],
+      "observed": "accept",
+      "required_in_next_revision": "reject",
+      "error": null
+    }
+  ],
+  "blocking_groups": [
+    "R2",
+    "R4",
+    "SCOUT-C1"
+  ],
+  "decision": "request-revision",
+  "contract_accepted": false,
+  "runtime_adapter_executed": false,
+  "poc_executed": false,
+  "notice": "Exit 0 reproduces known gaps, not acceptance. Inputs are format fixtures. Required next-revision behavior follows the proposed segment/manifest design, not the current draft.2 schema. No real run or telemetry is claimed."
+}

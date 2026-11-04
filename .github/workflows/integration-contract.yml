@@ -6,6 +6,7 @@ on:
       - 'docs/integration/**'
       - 'scripts/check_integration_contract.py'
       - 'scripts/check_contract_clock.py'
+      - 'scripts/review_integration_contract.py'
       - '.github/workflows/integration-contract.yml'
 
 permissions:
@@ -24,8 +25,12 @@ jobs:
           python-version: '3.12'
       - run: python scripts/check_integration_contract.py
       - run: python scripts/check_contract_clock.py --output runs/contract-clock-check.json
+      - name: Reproduce open review gaps (not contract acceptance)
+        run: python scripts/review_integration_contract.py --output runs/contract-second-pass.json
       - uses: actions/upload-artifact@v4
         with:
           name: scout-contract-clock-${{ matrix.os }}
-          path: runs/contract-clock-check.json
+          path: |
+            runs/contract-clock-check.json
+            runs/contract-second-pass.json
           if-no-files-found: error

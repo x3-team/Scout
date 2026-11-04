@@ -1,0 +1,451 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scout SkillForge digital contract proposal",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/session"
+    },
+    {
+      "$ref": "#/$defs/observation"
+    },
+    {
+      "$ref": "#/$defs/command"
+    },
+    {
+      "$ref": "#/$defs/result"
+    }
+  ],
+  "$defs": {
+    "session": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "session_id",
+        "type",
+        "profile",
+        "frame",
+        "dt_s",
+        "max_steps",
+        "max_v_mps",
+        "max_omega_rad_s",
+        "stop_clearance_m",
+        "sensor_range_m",
+        "seed",
+        "controller",
+        "world",
+        "provenance"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "session"
+        },
+        "profile": {
+          "const": "digital_known_map"
+        },
+        "frame": {
+          "const": "lab_x_right_y_up_yaw_ccw"
+        },
+        "dt_s": {
+          "const": 0.05
+        },
+        "max_steps": {
+          "const": 3600
+        },
+        "max_v_mps": {
+          "const": 0.15
+        },
+        "max_omega_rad_s": {
+          "const": 0.8
+        },
+        "stop_clearance_m": {
+          "const": 0.22
+        },
+        "sensor_range_m": {
+          "const": 1.0
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "controller": {
+          "type": "object",
+          "required": [
+            "id",
+            "version"
+          ],
+          "properties": {
+            "id": {
+              "const": "goal_seeker"
+            },
+            "version": {
+              "const": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "world": {
+          "type": "object",
+          "required": [
+            "width_m",
+            "height_m",
+            "radius_m",
+            "obstacles"
+          ],
+          "properties": {
+            "width_m": {
+              "type": "number",
+              "minimum": 0.3,
+              "maximum": 10
+            },
+            "height_m": {
+              "type": "number",
+              "minimum": 0.3,
+              "maximum": 10
+            },
+            "radius_m": {
+              "const": 0.14
+            },
+            "obstacles": {
+              "type": "array",
+              "maxItems": 32,
+              "items": {
+                "type": "object",
+                "required": [
+                  "x_min",
+                  "y_min",
+                  "x_max",
+                  "y_max"
+                ],
+                "properties": {
+                  "x_min": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                  },
+                  "y_min": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                  },
+                  "x_max": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                  },
+                  "y_max": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "pose",
+            "map",
+            "range",
+            "computer_vision_executed"
+          ],
+          "properties": {
+            "pose": {
+              "const": "ideal_simulation"
+            },
+            "map": {
+              "const": "ideal_static_map"
+            },
+            "range": {
+              "const": "synthetic_body_clearance"
+            },
+            "computer_vision_executed": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "observation": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "session_id",
+        "type",
+        "step",
+        "time_s",
+        "pose",
+        "target",
+        "v_mps",
+        "omega_rad_s",
+        "sensor_status",
+        "front_body_clearance_m",
+        "sampled_at_s"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "observation"
+        },
+        "step": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3599
+        },
+        "time_s": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 179.95
+        },
+        "pose": {
+          "type": "object",
+          "required": [
+            "x_m",
+            "y_m",
+            "yaw_rad"
+          ],
+          "properties": {
+            "x_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "y_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "yaw_rad": {
+              "type": "number",
+              "minimum": -3.141592653589793,
+              "exclusiveMaximum": 3.141592653589793
+            }
+          },
+          "additionalProperties": false
+        },
+        "target": {
+          "type": "object",
+          "required": [
+            "id",
+            "x_m",
+            "y_m"
+          ],
+          "properties": {
+            "id": {
+              "enum": [
+                "A",
+                "B",
+                "C",
+                "HOME"
+              ]
+            },
+            "x_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "y_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10
+            }
+          },
+          "additionalProperties": false
+        },
+        "v_mps": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.15
+        },
+        "omega_rad_s": {
+          "type": "number",
+          "minimum": -0.8,
+          "maximum": 0.8
+        },
+        "sensor_status": {
+          "enum": [
+            "valid",
+            "unavailable"
+          ]
+        },
+        "front_body_clearance_m": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sampled_at_s": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 179.95
+        }
+      },
+      "additionalProperties": false
+    },
+    "command": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "session_id",
+        "type",
+        "step",
+        "expires_after_step",
+        "mode",
+        "v_mps",
+        "omega_rad_s"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "command"
+        },
+        "step": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3599
+        },
+        "expires_after_step": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "mode": {
+          "enum": [
+            "drive",
+            "stop"
+          ]
+        },
+        "v_mps": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.15
+        },
+        "omega_rad_s": {
+          "type": "number",
+          "minimum": -0.8,
+          "maximum": 0.8
+        }
+      },
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "session_id",
+        "type",
+        "execution",
+        "scope",
+        "status",
+        "reason",
+        "stop_confirmed",
+        "metrics"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.1"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "result"
+        },
+        "execution": {
+          "enum": [
+            "digital_simulation",
+            "contract_example"
+          ]
+        },
+        "scope": {
+          "const": "segment"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "blocked",
+            "fault",
+            "timeout"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "stop_confirmed": {
+          "type": "boolean"
+        },
+        "metrics": {
+          "type": "object",
+          "required": [
+            "steps",
+            "duration_s",
+            "distance_m",
+            "collision_guard_activations"
+          ],
+          "properties": {
+            "steps": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3600
+            },
+            "duration_s": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 180
+            },
+            "distance_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 27
+            },
+            "collision_guard_activations": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3600
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

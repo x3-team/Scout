@@ -1,0 +1,418 @@
+{
+  "notice": "FORMAT EXAMPLES ONLY; not measured integration results.",
+  "base": {
+    "session": {
+      "schema_version": "scout-skillforge/0.1-draft.1",
+      "session_id": "format-example-seed-1",
+      "type": "session",
+      "profile": "digital_known_map",
+      "frame": "lab_x_right_y_up_yaw_ccw",
+      "dt_s": 0.05,
+      "max_steps": 3600,
+      "max_v_mps": 0.15,
+      "max_omega_rad_s": 0.8,
+      "stop_clearance_m": 0.22,
+      "sensor_range_m": 1,
+      "seed": 1,
+      "controller": {
+        "id": "goal_seeker",
+        "version": 1
+      },
+      "world": {
+        "width_m": 3,
+        "height_m": 2.4,
+        "radius_m": 0.14,
+        "obstacles": [
+          {
+            "x_min": 1.1,
+            "y_min": 1,
+            "x_max": 1.8,
+            "y_max": 1.4
+          }
+        ]
+      },
+      "provenance": {
+        "pose": "ideal_simulation",
+        "map": "ideal_static_map",
+        "range": "synthetic_body_clearance",
+        "computer_vision_executed": false
+      }
+    },
+    "observation": {
+      "schema_version": "scout-skillforge/0.1-draft.1",
+      "session_id": "format-example-seed-1",
+      "type": "observation",
+      "step": 0,
+      "time_s": 0,
+      "pose": {
+        "x_m": 0.6,
+        "y_m": 0.6,
+        "yaw_rad": 0
+      },
+      "target": {
+        "id": "A",
+        "x_m": 2.4,
+        "y_m": 0.6
+      },
+      "v_mps": 0,
+      "omega_rad_s": 0,
+      "sensor_status": "valid",
+      "front_body_clearance_m": 1,
+      "sampled_at_s": 0
+    },
+    "command": {
+      "schema_version": "scout-skillforge/0.1-draft.1",
+      "session_id": "format-example-seed-1",
+      "type": "command",
+      "step": 0,
+      "expires_after_step": 1,
+      "mode": "drive",
+      "v_mps": 0.15,
+      "omega_rad_s": 0
+    },
+    "result": {
+      "schema_version": "scout-skillforge/0.1-draft.1",
+      "session_id": "format-example-seed-1",
+      "type": "result",
+      "execution": "contract_example",
+      "scope": "segment",
+      "status": "completed",
+      "reason": "GOAL_REACHED",
+      "stop_confirmed": true,
+      "metrics": {
+        "steps": 240,
+        "duration_s": 12,
+        "distance_m": 1.8,
+        "collision_guard_activations": 0
+      }
+    },
+    "previous_step": -1
+  },
+  "positive_cases": [
+    {
+      "name": "drive",
+      "changes": []
+    },
+    {
+      "name": "blocked-stop",
+      "changes": [
+        [
+          "observation.front_body_clearance_m",
+          0.2
+        ],
+        [
+          "command.mode",
+          "stop"
+        ],
+        [
+          "command.v_mps",
+          0
+        ],
+        [
+          "result.status",
+          "blocked"
+        ],
+        [
+          "result.reason",
+          "PATH_BLOCKED"
+        ]
+      ]
+    },
+    {
+      "name": "missing-sensor-stop",
+      "changes": [
+        [
+          "observation.sensor_status",
+          "unavailable"
+        ],
+        [
+          "observation.front_body_clearance_m",
+          null
+        ],
+        [
+          "command.mode",
+          "stop"
+        ],
+        [
+          "command.v_mps",
+          0
+        ],
+        [
+          "result.status",
+          "fault"
+        ],
+        [
+          "result.reason",
+          "SENSOR_UNAVAILABLE"
+        ]
+      ]
+    }
+  ],
+  "negative_cases": [
+    {
+      "name": "unknown-version",
+      "changes": [
+        [
+          "command.schema_version",
+          "future"
+        ]
+      ]
+    },
+    {
+      "name": "wrong-frame",
+      "changes": [
+        [
+          "session.frame",
+          "image_y_down"
+        ]
+      ]
+    },
+    {
+      "name": "bool-speed",
+      "changes": [
+        [
+          "command.v_mps",
+          true
+        ]
+      ]
+    },
+    {
+      "name": "reverse",
+      "changes": [
+        [
+          "command.v_mps",
+          -0.01
+        ]
+      ]
+    },
+    {
+      "name": "overspeed",
+      "changes": [
+        [
+          "command.v_mps",
+          0.151
+        ]
+      ]
+    },
+    {
+      "name": "turn-limit",
+      "changes": [
+        [
+          "command.omega_rad_s",
+          0.801
+        ]
+      ]
+    },
+    {
+      "name": "wrong-session",
+      "changes": [
+        [
+          "command.session_id",
+          "another"
+        ]
+      ]
+    },
+    {
+      "name": "old-command",
+      "changes": [
+        [
+          "command.step",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "late-ttl",
+      "changes": [
+        [
+          "command.expires_after_step",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "nonzero-stop",
+      "changes": [
+        [
+          "command.mode",
+          "stop"
+        ]
+      ]
+    },
+    {
+      "name": "unknown-field",
+      "changes": [
+        [
+          "command.legacy_wheel_rps",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "not-a-number",
+      "changes": [
+        [
+          "command.v_mps",
+          "NaN"
+        ]
+      ]
+    },
+    {
+      "name": "sensor-lost-drive",
+      "changes": [
+        [
+          "observation.front_body_clearance_m",
+          null
+        ],
+        [
+          "observation.sensor_status",
+          "unavailable"
+        ]
+      ]
+    },
+    {
+      "name": "sensor-null-valid",
+      "changes": [
+        [
+          "observation.front_body_clearance_m",
+          null
+        ]
+      ]
+    },
+    {
+      "name": "blocked-drive",
+      "changes": [
+        [
+          "observation.front_body_clearance_m",
+          0.22
+        ]
+      ]
+    },
+    {
+      "name": "saturated-range-invalid",
+      "changes": [
+        [
+          "observation.front_body_clearance_m",
+          1.01
+        ]
+      ]
+    },
+    {
+      "name": "future-sensor",
+      "changes": [
+        [
+          "observation.sampled_at_s",
+          0.001
+        ]
+      ]
+    },
+    {
+      "name": "stale-sensor",
+      "changes": [
+        [
+          "observation.step",
+          4
+        ],
+        [
+          "observation.time_s",
+          0.2
+        ],
+        [
+          "command.step",
+          4
+        ],
+        [
+          "command.expires_after_step",
+          5
+        ],
+        [
+          "previous_step",
+          3
+        ]
+      ]
+    },
+    {
+      "name": "skipped-step",
+      "changes": [
+        [
+          "previous_step",
+          -2
+        ]
+      ]
+    },
+    {
+      "name": "duplicate-step",
+      "changes": [
+        [
+          "previous_step",
+          0
+        ]
+      ]
+    },
+    {
+      "name": "wrong-time",
+      "changes": [
+        [
+          "observation.time_s",
+          0.01
+        ]
+      ]
+    },
+    {
+      "name": "outside-footprint",
+      "changes": [
+        [
+          "observation.pose.x_m",
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "target-on-obstacle",
+      "changes": [
+        [
+          "observation.target.x_m",
+          1.2
+        ],
+        [
+          "observation.target.y_m",
+          1.2
+        ]
+      ]
+    },
+    {
+      "name": "inverted-box",
+      "changes": [
+        [
+          "session.world.obstacles",
+          [
+            {
+              "x_min": 1.8,
+              "y_min": 1,
+              "x_max": 1.1,
+              "y_max": 1.4
+            }
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "unconfirmed-completion",
+      "changes": [
+        [
+          "result.stop_confirmed",
+          false
+        ]
+      ]
+    },
+    {
+      "name": "result-time-mismatch",
+      "changes": [
+        [
+          "result.metrics.duration_s",
+          13
+        ]
+      ]
+    }
+  ]
+}

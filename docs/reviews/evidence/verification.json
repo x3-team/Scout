@@ -1,0 +1,101 @@
+{
+  "source_head": "03bff5eb0c93eb7a080f7a8840d350ad75e86c52",
+  "base_core_head": "e8ad8dfda3d4417c97f40bd7128377af2bb224a1",
+  "environment": {
+    "python": "3.12.14",
+    "os": "Linux",
+    "source_materialization": "34 Git blobs SHA-1 verified; local git commit is a snapshot, not upstream history"
+  },
+  "commands": [
+    "python -m unittest discover -s tests -v",
+    "python scripts/check_demos.py"
+  ],
+  "unittest_count": 30,
+  "unittest_passed": true,
+  "runs": [
+    {
+      "name": "normal",
+      "json_sha256": "e97e281381429caa7dc4584e8765521c6c4d19887f29b5092898c369aa240229",
+      "status": "COMPLETED",
+      "reason": "ROUTE_FINISHED",
+      "stopped": true,
+      "visited_stations": [
+        "A",
+        "B",
+        "C"
+      ],
+      "metrics": {
+        "duration_s": 49.05,
+        "distance_m": 5.925,
+        "visited_count": 3,
+        "changed_station_count": 0,
+        "completion_ratio": 1.0,
+        "min_front_clearance_m": 0.480657,
+        "collision_guard_activations": 0,
+        "simulated_contacts": 0,
+        "control_steps": 981
+      }
+    },
+    {
+      "name": "deviations",
+      "json_sha256": "b7c70596b64e65d26501da1d38074a9b5951b822a8530a662c0d2e20812e733c",
+      "status": "COMPLETED",
+      "reason": "ROUTE_FINISHED",
+      "stopped": true,
+      "visited_stations": [
+        "A",
+        "B",
+        "C"
+      ],
+      "metrics": {
+        "duration_s": 49.05,
+        "distance_m": 5.925,
+        "visited_count": 3,
+        "changed_station_count": 2,
+        "completion_ratio": 1.0,
+        "min_front_clearance_m": 0.480657,
+        "collision_guard_activations": 0,
+        "simulated_contacts": 0,
+        "control_steps": 981
+      }
+    },
+    {
+      "name": "blocked",
+      "json_sha256": "6d448701878c0db753a9c39fed6cdb32204abfca2603d4b36bcec38e41eadd55",
+      "status": "BLOCKED",
+      "reason": "PATH_BLOCKED",
+      "stopped": true,
+      "visited_stations": [],
+      "metrics": {
+        "duration_s": 3.6,
+        "distance_m": 0.54,
+        "visited_count": 0,
+        "changed_station_count": 0,
+        "completion_ratio": 0.0,
+        "min_front_clearance_m": 0.218174,
+        "collision_guard_activations": 0,
+        "simulated_contacts": 0,
+        "control_steps": 72
+      }
+    },
+    {
+      "name": "sensor-failure",
+      "json_sha256": "16624f5608a7c93c0b7baba7a00f37a48f2cd1953b932a4846987114f125fc33",
+      "status": "FAULT",
+      "reason": "SENSOR_UNAVAILABLE",
+      "stopped": true,
+      "visited_stations": [],
+      "metrics": {
+        "duration_s": 2.0,
+        "distance_m": 0.3,
+        "visited_count": 0,
+        "changed_station_count": 0,
+        "completion_ratio": 0.0,
+        "min_front_clearance_m": 0.998008,
+        "collision_guard_activations": 0,
+        "simulated_contacts": 0,
+        "control_steps": 40
+      }
+    }
+  ]
+}

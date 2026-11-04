@@ -1,0 +1,24 @@
+name: Proposed integration contract fixtures
+
+on:
+  pull_request:
+    paths:
+      - 'docs/integration/**'
+      - 'scripts/check_integration_contract.py'
+      - '.github/workflows/integration-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - run: python scripts/check_integration_contract.py

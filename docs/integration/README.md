@@ -1,5 +1,10 @@
 # INTEGRATION-01B — проект интеграции Scout ↔ SkillForge
 
+После принятия draft.3 обеими сторонами начат отдельно разрешённый runtime-этап:
+[INTEGRATION-02B — публичный процесс и одна цель](controller-bridge.md),
+[checkpoint](../reviews/controller-bridge.md). Состояния ниже относятся к истории
+подготовки контракта; новая работа изолирована от веток текущих PR #1/#2/#4.
+
 Актуальная canonical-ревизия: [draft.3](contract-v0.md),
 [чекпоинт и исходные проверки](../reviews/contract-draft3.md). Включены принятые
 как требования R2/R4/SCOUT-C1 из SkillForge ref

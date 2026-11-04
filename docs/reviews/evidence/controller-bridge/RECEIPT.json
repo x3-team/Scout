@@ -1,0 +1,10 @@
+{
+  "archive": "one-goal-7b322445.zip",
+  "sha256": "c369b948d440c911a45f767f434e0b9563bb48fd172043e413cc88529f41c3cf",
+  "bytes": 79082,
+  "scout_code_ref": "7b322445dd0f3408409cbfe4a85f14f2b19c4098",
+  "skillforge_ref": "0df4b22fd8c01f526be3212acea362af2d52f1be",
+  "source_kind": "Git-tree-verified immutable snapshots",
+  "environment": "Linux / CPython 3.12.14",
+  "scope": "Four actual single-goal runs; full mission and baseline comparison not executed"
+}

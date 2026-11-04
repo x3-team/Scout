@@ -14,6 +14,30 @@ SkillForge прошли локально. Код GoalSeeker и physics SkillForg
 transport logs создаются CLI и проходят canonical checker. Контрольная копия
 первых измерений/исходные hashes сохраняются отдельно после проверки нового PR.
 
+## Контрольная копия выполненных запусков
+
+Код Scout: `7b322445dd0f3408409cbfe4a85f14f2b19c4098`.
+Проверены все70 source blobs Scout и104 SkillForge по immutable Git tree,
+SHA-1 blob и SHA-256; снимки не выдаются за Git history. Полные source digests
+обоих продуктов сохранены в [summary](evidence/controller-bridge/summary.json).
+[Архив](evidence/controller-bridge/one-goal-7b322445.zip) содержит18 файлов:
+открыть index.html после распаковки, исходные canonical JSON и transport рядом.
+[Checksum/source receipt](evidence/controller-bridge/RECEIPT.json).
+
+| Случай | Исход | Шаги | Модельное время | Путь | Stop / guard |
+| --- | --- | ---: | ---: | ---: | --- |
+| forward | GOAL_REACHED |237|11.85 с|1.777500 м|подтверждён /0|
+| turn | GOAL_REACHED |193|9.65 с|1.177499 м|подтверждён /0|
+| blocked | PATH_BLOCKED |72|3.60 с|0.540000 м|подтверждён /0|
+| sensor-failure | SENSOR_UNAVAILABLE |40|2.00 с|0.300000 м|подтверждён /0|
+
+Локально прошли12 bridge unittest (включая реальные четыре случая и отдельные
+fault-injection subprocesses),30 исходных core tests и4 demo outcome. Все четыре
+измеренных report.json приняты неизменённым canonical checker. Это автоматическая
+проверка Linux/Python3.12.14; итог нового Windows/Linux CI фиксируется в PR.
+В последующем коммите добавляется только эта контрольная копия и описание;
+измерения относятся к указанному code ref, а не к вымышленному новому прогону.
+
 | Случай | Критерий |
 | --- | --- |
 | forward | GOAL_REACHED, подтверждённый stop, canonical report |

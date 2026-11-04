@@ -1,9 +1,0 @@
-__pycache__/
-*.py[cod]
-.venv/
-runs/
-build/
-dist/
-*.egg-info/
-.env
-.ci-browser/

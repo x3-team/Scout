@@ -1,35 +1,4 @@
-"""Deterministic JSON and offline SVG replay, with atomic file replacement."""
-import json
-import os
-from pathlib import Path
-import tempfile
-
-
-def atomic_write(path: str | Path, content: str):
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = None
-    try:
-        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n",
-                                         dir=path.parent, delete=False) as stream:
-            temporary = stream.name
-            stream.write(content)
-        os.replace(temporary, path)
-    finally:
-        if temporary is not None and os.path.exists(temporary):
-            os.unlink(temporary)
-
-
-def write_json(report: dict, path: str | Path):
-    atomic_write(path, json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
-
-
-def write_html(report: dict, path: str | Path):
-    data = json.dumps(report, ensure_ascii=False, allow_nan=False).replace("<", "\\u003c")
-    atomic_write(path, HTML.replace("__REPORT_JSON__", data))
-
-
-HTML = r'''<!doctype html>
+<!doctype html>
 <html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Scout — цифровая инспекция</title>
 <style>
@@ -48,7 +17,7 @@ dt{color:#a4b7c6;font-size:13px}dd{margin:0;font-size:21px}ul{padding-left:21px}
 @media(max-width:730px){body{padding:16px}main{grid-template-columns:1fr}section{padding:16px}h1{font-size:25px}}
 </style>
 <header><div><h1>SCOUT / 01</h1><div class="muted">Лабораторная цифровая инспекция</div></div>
-<div class="tag">СИНТЕТИЧЕСКИЙ СТЕНД · CPU</div></header>
+<div class="tag">СИНТЕТИЧЕСКИЙ СТЕНД · CPU</div></header><nav class="scenarios" aria-label="Сценарии Scout"><a href="normal.html">Обычный обход</a><a href="deviations.html">Отклонения</a><a href="blocked.html">Путь заблокирован</a><a href="sensor-failure.html" aria-current="page">Отказ датчика</a></nav><style>.scenarios{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.scenarios a{color:#c2d3e0;border:1px solid #405765;padding:8px 12px;border-radius:8px;text-decoration:none;font-size:14px}.scenarios a[aria-current]{background:#7ce0c1;color:#10251f;border-color:#7ce0c1}.scenarios a:focus-visible{outline:3px solid #ffdc8c;outline-offset:3px}</style>
 <main><section><h2 id="scenario"></h2><svg id="arena" role="img" aria-label="Полигон, препятствия и траектория робота"></svg>
 <div class="legend">Бирюзовый — траектория · серый — препятствия · янтарный — подготовленные отклонения</div>
 <button id="play">Воспроизвести</button> <span id="time" aria-live="polite"></span>
@@ -58,7 +27,7 @@ dt{color:#a4b7c6;font-size:13px}dd{margin:0;font-size:21px}ul{padding-left:21px}
 <ul id="stations"></ul><p id="reason" class="warning"></p><button id="download">Скачать JSON</button></section></main>
 <footer class="muted">Это воспроизведение завершённого расчёта. Отклонения заданы сценарием, компьютерное зрение не выполнялось.
 Положение идеализировано, торможение мгновенное; физическая безопасность этим запуском не подтверждается.</footer>
-<script type="application/json" id="data">__REPORT_JSON__</script>
+<script type="application/json" id="data">{"schema_version": "1.0", "scout_version": "0.1.0", "scenario": "sensor-failure", "scenario_sha256": "7532ac1a83938b03cfbd2924a0ef29dc0c4d13043a302e7226a9b66cacb1079e", "seed": 1, "execution": "digital_simulation", "clock": "simulation_seconds", "evidence": {"source": "scenario_fixture", "synthetic": true, "computer_vision_executed": false, "notice": "Prepared synthetic deviations; not camera or computer vision results."}, "status": "FAULT", "reason": "SENSOR_UNAVAILABLE", "visited_stations": [], "planned_stations": ["A", "B", "C"], "returned_home": false, "stopped": true, "metrics": {"duration_s": 2.0, "distance_m": 0.3, "visited_count": 0, "changed_station_count": 0, "completion_ratio": 0.0, "min_front_clearance_m": 0.998008, "collision_guard_activations": 0, "simulated_contacts": 0, "control_steps": 40}, "final_pose": {"x": 0.9000000000000025, "y": 0.6, "heading": 0.0}, "inspections": [], "events": [{"time_s": 0.0, "type": "MISSION_STARTED", "scenario": "sensor-failure"}, {"time_s": 2.0, "type": "SAFETY_STOP", "reason": "SENSOR_UNAVAILABLE", "target": "A"}, {"time_s": 2.0, "type": "MISSION_FINISHED", "status": "FAULT", "reason": "SENSOR_UNAVAILABLE"}], "trace": [{"time_s": 0.0, "x": 0.6, "y": 0.6, "heading": 0, "state": "PRECHECK"}, {"time_s": 0.2, "x": 0.63, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 0.4, "x": 0.66, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 0.6, "x": 0.69, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 0.8, "x": 0.72, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 1.0, "x": 0.75, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 1.2, "x": 0.78, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 1.4, "x": 0.81, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 1.6, "x": 0.84, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 1.8, "x": 0.87, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 2.0, "x": 0.9, "y": 0.6, "heading": 0.0, "state": "NAVIGATE"}, {"time_s": 2.0, "x": 0.9, "y": 0.6, "heading": 0.0, "state": "FAULT"}], "world": {"name": "sensor-failure", "width": 3, "height": 2.4, "start": {"x": 0.6, "y": 0.6, "heading": 0}, "stations": [{"id": "A", "x": 2.4, "y": 0.6, "deviations": []}, {"id": "B", "x": 2.4, "y": 1.8, "deviations": []}, {"id": "C", "x": 0.6, "y": 1.8, "deviations": []}], "obstacles": [], "robot": {"radius_m": 0.14, "wheel_radius_m": 0.04, "axle_track_m": 0.18, "max_speed_mps": 0.15, "max_turn_rps": 0.8}, "dt_s": 0.05, "max_duration_s": 180.0, "sensor_range_m": 1.0, "sensor_noise_m": 0.002, "stop_clearance_m": 0.22, "arrival_tolerance_m": 0.025, "sensor_failure_at_s": 2}, "limitations": ["Ideal simulated pose; no measured odometry or ArUco localization.", "Instant simulated braking; no claim about physical stopping distance.", "Circular footprint and planar static obstacles; no automatic detour.", "Fixture inspection does not measure computer vision accuracy."]}</script>
 <script>
 'use strict';
 const r=JSON.parse(document.getElementById('data').textContent), w=r.world;
@@ -128,4 +97,3 @@ $('download').addEventListener('click',()=>{
 });
 frame();
 </script></html>
-'''

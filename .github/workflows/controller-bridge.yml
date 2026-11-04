@@ -44,9 +44,13 @@ jobs:
         run: python -m unittest discover -s integration_tests -v
       - name: Four actual one-goal runs and canonical report validation
         run: python scripts/check_goal_bridge.py --skillforge-root .ci-skillforge --output-dir runs/goal-bridge
+      - name: Full-route paired comparison and reproducibility
+        run: python scripts/check_route_bridge.py --skillforge-root .ci-skillforge --output-dir runs/route-bridge
       - uses: actions/upload-artifact@v4
-        if: always() && hashFiles('runs/goal-bridge/summary.json') != ''
+        if: always() && hashFiles('runs/goal-bridge/summary.json', 'runs/route-bridge/summary.json') != ''
         with:
-          name: scout-goal-bridge-${{ matrix.os }}-${{ matrix.python }}
-          path: runs/goal-bridge/
+          name: scout-controller-bridge-${{ matrix.os }}-${{ matrix.python }}
+          path: |
+            runs/goal-bridge/
+            runs/route-bridge/
           if-no-files-found: error

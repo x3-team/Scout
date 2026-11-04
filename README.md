@@ -1,12 +1,12 @@
 # Scout
 
-**INTEGRATION-02B:** [реальная связка одной цели](docs/integration/controller-bridge.md)
-через публичный JSON-процесс SkillForge, [checkpoint](docs/reviews/controller-bridge.md).
-Полный маршрут и сравнение контроллеров остаются следующим отдельным этапом.
+**INTEGRATION-02C:** [полный маршрут и парное сравнение](docs/integration/route-bridge.md)
+через публичный JSON-процесс SkillForge, [checkpoint](docs/reviews/route-bridge.md).
+Сохранён [предыдущий одноцелевой checkpoint](docs/reviews/controller-bridge.md).
 
 **Интеграционный контракт:** [canonical draft.3](docs/integration/contract-v0.md)
 и [проверяемый checkpoint](docs/reviews/contract-draft3.md). Это отдельный проект
-формата и офлайн-fixtures. Первый одноцелевой адаптер вынесен отдельно;
+формата и офлайн-fixtures. Runtime-адаптер вынесен отдельно;
 аппаратное управление не реализовано.
 
 **SCOUT-02:** добавлен отдельный режим инспекции изображений на CPU.
@@ -15,8 +15,8 @@
 Тесты используют синтетические изображения; точность на настоящих фотографиях
 пока не измерена. [Ревью SCOUT-01](docs/reviews/scout-01.md).
 
-CPU-first лабораторный цифровой прототип робота-инспектора. Это отдельный проект:
-SkillForge не используется и не изменяется.
+CPU-first лабораторный цифровой прототип робота-инспектора. Базовый CLI ниже
+работает самостоятельно; отдельная интеграционная команда использует SkillForge.
 
 ## Быстрый запуск на Windows
 

@@ -11,14 +11,16 @@ def serve(mode):
     session = json.loads(source.readline())
     emit(dict(protocol='skillforge-scout-worker/1',ready=True,wire_revision=session['schema_version']))
     calls = 0
+    after_inspection = None
     for line in source:
         obs = json.loads(line);calls += 1
+        if after_inspection is not None:after_inspection += 1
         if mode == 'hang':time.sleep(60)
         if mode == 'partial-line':
             destination.write(b'{');destination.flush();time.sleep(60)
         if mode == 'eof':return
         if mode == 'exit':raise SystemExit(7)
-        if mode == 'exception' or mode == 'later' and calls == 3:
+        if mode == 'exception' or mode == 'later' and calls == 3 or mode == 'later-segment' and after_inspection == 3:
             emit(dict(protocol='skillforge-scout-worker/1',error='CONTROLLER_EXCEPTION',command=None,local_stop_required=True));return
         if mode == 'oversized':destination.write(b'x'*70000+b'\n');destination.flush();return
         if mode == 'duplicate':destination.write(b'{"protocol":"skillforge-scout-worker/1","protocol":"bad"}\n');destination.flush();return
@@ -29,6 +31,13 @@ def serve(mode):
         if reason:
             emit(dict(protocol='skillforge-scout-worker/1',reason=reason,command=None,raw_action=None,
                       limitation='safety-stop',local_stop_required=True));return
+        if not obs['motion_enabled']:
+            command = {k:obs[k] for k in ('schema_version','trial_id','epoch','segment_id','target_id','step')}
+            command.update(type='command',expires_after_step=obs['step']+1,mode='stop',velocity=dict(v_mps=0,omega_rad_s=0))
+            emit(dict(protocol='skillforge-scout-worker/1',command=command,raw_action=None,reason=None,
+                      limitation='inspection-stop',local_stop_required=True))
+            after_inspection = 0
+            continue
         raw = {'v_mps':0 if mode=='zero' else .1,'omega_rad_s':0}
         command = {k:obs[k] for k in ('schema_version','trial_id','epoch','segment_id','target_id','step')}
         command.update(type='command',expires_after_step=obs['step']+1,mode='drive' if raw['v_mps'] else 'stop',velocity=dict(raw))

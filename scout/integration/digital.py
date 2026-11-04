@@ -40,8 +40,8 @@ def session_for(scenario,seed,epoch):
                                           range='synthetic_body_clearance',computer_vision_executed=False))
 
 
-def observation_for(telemetry,step,session):
-    target = session['plan'][0]
+def observation_for(telemetry,step,session,*,target_index=0):
+    target = session['plan'][target_index]
     return dict(schema_version=VERSION,type='observation',trial_id=session['trial_id'],epoch=session['epoch'],
                 segment_id=target['segment_id'],target_id=target['target_id'],step=step,time_s=step*.05,
                 pose=dict(x_m=telemetry.pose.x,y_m=telemetry.pose.y,yaw_rad=telemetry.pose.heading),

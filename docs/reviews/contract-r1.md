@@ -1,5 +1,8 @@
 # Чекпоинт Scout: canonical-поправка R1, без runtime
 
+Текущая ревизия: [canonical draft.3](contract-draft3.md). Ниже — исторический
+checkpoint R1/draft.2; новые counts и CI проверяются по новому артефакту.
+
 Дополнение по запросу владельца: [повторное ревью всего контракта](contract-second-pass.md)
 подтвердило R2/R4 и добавило SCOUT-C1 (status/reason). Положительная проверка R1
 не закрывает эти условия.

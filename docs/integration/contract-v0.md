@@ -1,130 +1,216 @@
-# Проект контракта scout-skillforge/0.1-draft.2
+# Canonical-проект scout-skillforge/0.1-draft.3
 
-Статус: проект, **не реализованный API**. Четыре примера и схема описывают будущий
-обмен данными, а не текущие форматы отчётов Scout 1.0 или SkillForge schema_version=1.
-Нельзя импортировать один из этих трёх форматов под видом другого.
+Статус: **реализован формат и его офлайн-проверка; совместная приёмка и runtime
+не выполнены**. Источник схемы — Scout. Это следующая ревизия после draft.2,
+а не отчёт текущего mission runner Scout 1.0 или SkillForge schema_version=1.
+Старые сообщения не мигрируют молча: неизвестная/прежняя версия отвергается.
+Предложение SkillForge принято как требования на ref
+`0fc2e8d96c6669782945e42bc78357d0aa4609ed`; нужен явный repin и ответ по этой
+canonical-ревизии, а не одобрение старой draft.2.
 
-Ревизия draft.2 исправляет только R1 из [ревью SkillForge
-PR #10](https://github.com/x3-team/SkillForge/pull/10): структурный maximum для
-time_s и sampled_at_s поднят с 179,95 до 180. Обычное вычисление
-`3599 * 0.05` даёт `179.95000000000002`; старый maximum ошибочно его отвергал.
-Контекстные clock/age, лимит step=3599 и TTL не ослаблены. Само значение 180
-для observation по-прежнему недопустимо: не соответствует разрешённому step.
-Неизвестная или прежняя wire-версия не принимается автоматически.
+[JSON Schema](contract-v0.schema.json), [форматные примеры](contract-v0.examples.json),
+[чекпоинт и исходный отчёт проверки](../reviews/contract-draft3.md).
+Исторический [draft.2](https://github.com/x3-team/Scout/blob/547a343a462169461be3a5e33ea6766f83b5b988/docs/integration/contract-v0.md)
+остаётся доступным по точному ref; его диагностические пробелы превращены в
+positive/negative acceptance cases новой ревизии.
 
-`python scripts/check_contract_clock.py --output runs/contract-clock-check.json`
-воспроизводит дефект со старыми пределами, проверяет все 3600 допустимых шагов,
-допуск возраста датчика и отрицательные границы. Это форматные fixtures,
-не результаты движения. [Чекпоинт и открытые R2/R4](../reviews/contract-r1.md).
-draft.2 **не является совместно принятым контрактом**: корреляция сегментов,
-epoch и полный manifest эксперимента ещё требуют следующей согласованной ревизии.
-[Повторное ревью](../reviews/contract-second-pass.md) также воспроизводит
-противоречивые status/reason и неподдерживаемое terminal observation шага 3600;
-решение остаётся request-revision, без запуска адаптера.
+## Назначение и границы
 
-[JSON Schema](contract-v0.schema.json) проверяет структуру и пределы.
-[Примеры и отрицательные случаи](contract-v0.examples.json) задают также
-межсообщенческие правила, которые JSON Schema не проверяет.
-`python scripts/check_integration_contract.py` проверяет эти fixtures стандартной
-библиотекой: ограниченный интерпретатор только использованного подмножества схемы
-и контекстные правила. Это проверка проекта контракта, не production validator,
-не реализация адаптера и не доказательство готовности оборудования.
+Только `digital_known_map`: CPU, идеальная поза/статическая карта, синтетический
+body-clearance. Движение рассчитывает только Scout; SkillForge предоставляет
+GoalSeeker через будущий facade. Scout владеет миссией, инспекцией, фильтром
+безопасности, часами и остановкой. Камера/инспекционные результаты контроллеру
+не передаются. Этот профиль не предназначен для реального робота.
 
-## Профиль и сообщения
+Полный формат задаёт `session`, `observation`, `command`, `result` и
+`experiment_report`. Каждое wire-сообщение ≤64 KiB UTF-8. Агрегированный отчёт
+может содержать до 3601 записей и ограничен 16 MiB; глубина JSON ≤32.
+JSON strict: повтор ключа, NaN/Infinity, bool вместо числа, неизвестные поля,
+неправильная версия и неограниченные массивы запрещены.
 
-Поддерживается только `digital_known_map`: локальные JSON-совместимые сообщения
-без сети, CPU, симуляционное время, идеальная поза/карта, синтетический дальномер.
-Размер одного JSON ≤64 KiB UTF-8, глубина и размер карты ограничены схемой.
-JSON strict: дубли ключей, NaN и Infinity запрещены до проверки схемы;
-bool не считается числом. Неизвестные поля/версии отвергаются явно.
+## Единицы и профиль
 
-1. `session`: неизменяемая геометрия мира, радиус, начальные параметры,
-   dt=0,05 с, max_steps=3600, лимиты, provenance. `session_id` — детерминированная
-   метка запуска, не средство аутентификации. Новая сессия сбрасывает step/состояние.
-2. `observation`: session_id, step, time_s, текущая идеальная pose, цель сегмента,
-   скорость, синтетический front_body_clearance_m и sampled_at_s. `target_id`
-   принимает A/B/C/HOME; inspection не передаётся контроллеру. В одной сессии
-   step начинается с 0 и возрастает ровно на 1; цель может меняться только Scout.
-3. `command`: привязана к session_id/step; `expires_after_step=step+1`.
-   `mode=drive|stop`; v_mps/omega_rad_s — **запрошенные**, не подтверждённые скорости.
-   Команда применяется один раз на интервал [step*dt,(step+1)*dt); поздний ответ
-   не переносится на следующий шаг. При stop обе компоненты строго равны нулю.
-4. `result`: краткий итог сегмента `completed|blocked|fault|timeout`, reason,
-   явное stop_confirmed и метрики. Полный отчёт миссии и CV-доказательства
-   хранятся Scout отдельно; completed сегмента не означает весь обход.
+`lab`: X вправо, Y вверх; `base`: X вперёд, Y влево. yaw от +X против часовой
+стрелки, [-π,π). Единицы SI: м, с, рад, м/с, рад/с. Прямоугольники —
+x_min/y_min/x_max/y_max; порядок и полный свободный круг робота проверяются.
+`profile`: dt=0.05, max_steps=3600, v≤0.15, |omega|≤0.8, stopping clearance=0.22,
+range=1.0, arrival tolerance=0.025, supervisor controller timeout=1.0 с.
+Радиус=0.14 м; другой профиль/привод требует новой ревизии.
 
-В `result` примеров используются вымышленные числа **только для проверки
-формата**, execution=`contract_example`. Это не измерения PoC. Схема также
-предусматривает execution=`digital_simulation` для будущего реального прогона,
-но наличие такого допустимого поля не является свидетельством выполнения.
+Front body clearance — консервативный допустимый прямой ход центра до контакта
+корпуса с расширенными AABB/границами, не сырой луч и не минимальная евклидова
+дистанция. Значение 1 м насыщено. `unavailable` требует null. Потеря дальномера,
+невалидная локализация/возраст или clearance≤0.22 запрещают advance, включая
+поворот на месте. Один observation потребляет один результат сенсора/RNG.
 
-## Геометрия, время и расстояние
+Схема ограничивает числовую структуру, а checker — связи и переходы. Нет
+дублирования физики, проверки всего непрерывного swept path или доказательства
+реальной остановки: это остаётся обязанностью Scout и отдельной приёмки.
 
-`lab`: X вправо, Y вверх; `base`: X вперёд, Y влево; yaw_rad от +X против
-часовой стрелки, диапазон [-π, π). Все расстояния/скорости/углы — м, м/с, рад,
-рад/с. Прямоугольник задаётся x_min/y_min/x_max/y_max; Scout x/y/width/height
-преобразуются без изменения геометрии. Ширина и высота мира задают [0,width]×[0,height].
-Полный круг робота и цель должны быть внутри мира без касания препятствий;
-порядок min/max и свободное место проверяются контекстно до запуска.
+## Попытка, сообщения и активное состояние
 
-Единственные часы — `time_s=step*dt_s`, абсолютный допуск 1e-9 с.
-В текущих Scout/HW именах `rps` соответствует рад/с; в контракте это обозначено
-явно. `sampled_at_s` не в будущем и возраст ≤2*dt_s (допуск 1e-9).
-Время wall clock служит только диагностике; UTC не участвует в физике.
+`trial_id` — метка опыта; `epoch` — уникальный ID живой попытки, независимый от
+seed. Все сообщения, manifest и results содержат одинаковые trial/epoch.
+Worker restart завершает попытку и создаёт новый epoch; продолжение старого
+движения запрещено. Эти ID не являются аутентификацией.
 
-front_body_clearance_m — консервативная оценка допустимого прямого хода центра
-до контакта круглого корпуса, вычисленная Scout по расширенным AABB и границам.
-Это не минимальное евклидово расстояние до любого предмета и не сырой дальномер.
-Значение 1 м насыщено; за пределами диапазона свободный путь не подтверждён.
-`sensor_status=unavailable` требует null. При unavailable или значении ≤0,22 м
-любая попытка движения блокируется независимо от решения контроллера.
-Поворот на месте также не разрешается обходом этой проверки.
-Окружение генерирует шум один раз на observation; повторное чтение не должно
-потреблять RNG незаметно. Профиль имеет radius=0,14, предел v=0,15 и omega=0,8;
-другая геометрия или реальные сенсоры потребуют новой согласованной версии.
+Валидатор получает **доверенные active_trial_id/active_epoch от вызывающей
+стороны**, а не извлекает активность из проверяемого сообщения. Поэтому replay
+целого старого отчёта с внутренне согласованными ID тоже отвергается. Уникальность
+epoch между реальными процессами должен обеспечить будущий runner; офлайн-fixture
+не может подтвердить такую уникальность в мире.
 
-## Выполнение и ошибки
+Session неизменяемо закрепляет профиль, seed, world, start pose, plan, контроллер и
+synthetic provenance. Неизменяемый `plan` содержит 1..4 уникальных segment_id и
+target_id (A/B/C/HOME), координаты целей, порядок. Для полного PoC отдельно
+фиксируется маршрут A/B/C/HOME; короткие планы нужны для контрактных проверок.
 
-Scout владеет порядком: валидировать исходную телеметрию → записать безопасное
-наблюдение → запросить command → проверить версию/сессию/step/TTL/конечность →
-независимый safety filter → применить → один advance(dt) → записать applied.
-Raw telemetry не попадает в метрики/trace до проверки. Неизвестное состояние
-или отсутствие дальномера — остановка, а не «бесконечно свободный путь».
+Observation содержит trial/epoch/segment/target, global step/time, pose, velocity,
+motion_enabled, sensor status/body-clearance/sample time. Координаты цели берутся
+из plan; цель не меняется внутри сегмента. Невалидная исходная телеметрия не
+попадает в метрики: отсутствие принятого observation записывается как partial
+report, а не заполняется вымышленной позой.
+Facade получает plan вместе с session и может найти координаты цели по
+segment_id/target_id без чтения агрегированного отчёта или импортов ядра Scout.
 
-Ни одного float NaN/Inf, отрицательной v или превышения лимита не маскировать
-ограничением: неверный ответ → FAULT/INVALID_COMMAND. Превышение может возникать
-внутри текущего GoalSeeker (omega=2*angle). Будущий facade SkillForge обязан
-ограничить его собственный сырой Action до договорных пределов **до** ответа,
-сохранить raw и normalization в полном журнале. Независимый фильтр Scout может
-уменьшить уже корректный запрос до нуля; requested/applied и причина сохраняются.
+Command повторяет ID и step наблюдения, TTL=`step+1`; v/omega — requested.
+Задний ход и превышение wire-лимитов отвергаются. `mode=stop` эквивалентен строго
+нулевым компонентам. Внутренний finite raw Action может превышать профиль:
+facade обязан записать raw, применить clamp v∈[0,0.15], omega∈[-0.8,0.8] и вернуть
+корректный requested. Это фиксирует `si-lab-yaw-clamp-v1`; неверный wire-ответ
+не исправляется задним числом. Текст отклонённого ответа хранится отдельно,
+ограниченно, в rejected_response; NaN никогда не становится числом журнала.
 
-Решение для v0: при любой недоступности/просрочке/исключении контроллера —
-stop, FAULT и частичный отчёт; PATH_BLOCKED → BLOCKED, лимит миссии → TIMEOUT.
-Неизвестная ошибка не становится BLOCKED. `stop_confirmed=false` запрещает
-completed и даёт FAULT/STOP_NOT_CONFIRMED. `stop_confirmed=true` означает только
-нулевую скорость модели, не аппаратное отключение моторов.
-INCONCLUSIVE инспекции нельзя превращать в UNCHANGED; инспекция остаётся вне
-этого контрактного обмена. Будущий mission outcome обязан различать полноту
-маршрута и пригодность инспекционных данных.
+## Глобальные часы и сегменты — R2
 
-Связность итога также проверяется: потеря датчика не может закончиться completed,
-блокировка пути — completed, а срабатывание footprint guard — любым исходом кроме
-fault. Приоритет причин: STOP_NOT_CONFIRMED, затем FOOTPRINT_GUARD, затем
-SENSOR_UNAVAILABLE, затем PATH_BLOCKED. Потеря датчика и блокировка завершают
-сегмент на текущем step без следующего advance. Итог не предшествует наблюдению,
-а distance_m не превышает max_v_mps × duration_s + 1e-9 м. Это необходимые
-проверки непротиворечивости; сами по себе они не подтверждают достижение цели.
+Единственный clock: `time_s=step*dt_s`, абсолютный допуск 1e-9 с. Step начинается
+с 0 и увеличивается ровно одним подтверждённым advance. Возраст сенсора —
+[-1e-9, 2*dt+1e-9]; нарушения дают STALE_SENSOR и не разрешают движение.
 
-Синхронный вызов цифрового контроллера ограничивается надзорным wall-clock timeout
-1 с в будущей реализации. Сам проверяемый callback не может гарантировать свою
-остановку: требуется отдельный процесс/надзор с отклонением запоздавших ответов,
-в том числе тест зависания. Это не повод реализовывать сервис сейчас.
-Лимит модельного шага не заменяет такой надзор. TTL и этот timeout не дают
-аппаратных гарантий; для оборудования нужны другой clock profile, watchdog,
-измеренное торможение и независимая кнопка отключения.
+Команды возможны на 0..3599. После advance3599 разрешены terminal observation
+3600/time180, локальная остановка и отчёт. На step3600 нет нового controller
+command/advance. Прежний дефект maximum179.95 устранён: законное
+3599*0.05=179.95000000000002 принимается. Структурный максимум времени оставляет
+допуск; смысловой clock по-прежнему проверяется независимо.
 
-## Фиксация решения
+Result содержит trial/epoch/segment/target, start_step/end_step, outcome,
+stop_confirmed, metrics. Интервал физических advance — **[start,end)**;
+завершающее observation имеет индекс end. steps=end-start, duration=steps*dt.
+Например start280/end300 — 20 шагов/1 с; global end time=15 с.
+Distance — сумма хорд принятых pose на том же интервале, не выдуманная оценка:
+она сверяется с trace и v*dt. Guard activations считаются по тому же сегменту,
+включая терминальную попытку шага, которую guard отверг целиком.
 
-До реализации обе парные задачи должны сослаться на одну ревизию этой схемы,
-её SHA-256, исходники обоих продуктов и отдельное решение по открытым приёмкам.
-Список проверок, владельцы и следующий PR описаны в [плане](README.md).
+Inspection-stop на end сохраняет zero requested/applied, raw_action=null,
+motion_enabled=false; GoalSeeker не вызывается. Остановка подтверждена отдельной
+телеметрией. Этот нулевой advance расходует общий бюджет, но находится уже вне
+метрик завершённого navigation-сегмента. Следующий сегмент начинается на end+1.
+Первый пример: A — advance0/1, result end2; inspection2 — zero advance;
+B начинается на3 и fault сразу, без advance. Ни clock, ни budget не сбрасываются.
+
+## Журнал и независимая остановка
+
+Каждая запись trace содержит observation, phase, raw_action, requested,
+rejected_response, applied, limitation, advance, guard/controller fault и
+local_stop. Navigate выполняет один advance. Inspection делает один нулевой
+advance. Terminal/interrupted — последняя запись, без advance, applied=null.
+После terminal ни одной новой записи движения нет.
+
+**local_stop и controller command — разные действия.** На terminal requested=null
+не означает «не вызывать robot.stop()». Local stop всегда attempted=true;
+confirmed=true требует отдельную проверенную нулевую velocity telemetry.
+Observation перед остановкой может честно содержать прежнюю ненулевую скорость.
+Её нельзя подменять нулями ради красивого результата.
+
+Footprint guard — отдельный терминальный случай: сохраняются finite raw и
+корректный requested предпринятого шага, applied=null/advance=false, local stop.
+Такой запрос допускается только при исходно безопасном observation и step<3600.
+При более раннем sensor/path stop контроллер не вызывается и requested=null.
+
+## Закрытая таблица исходов — SCOUT-C1
+
+| status | Разрешённый reason |
+| --- | --- |
+| completed | GOAL_REACHED |
+| blocked | PATH_BLOCKED |
+| timeout | MISSION_TIMEOUT |
+| fault | STOP_NOT_CONFIRMED, FOOTPRINT_GUARD, INVALID_OBSERVATION, LOCALIZATION_UNAVAILABLE, SENSOR_UNAVAILABLE, STALE_SENSOR, CONTROLLER_TIMEOUT, CONTROLLER_EXCEPTION, INVALID_COMMAND, RUNNER_EXCEPTION |
+
+Проверяется соответствие **в обе стороны** и контекст события. Исправный sensor
+не доказывает GOAL_REACHED: нужна записанная pose в arrival tolerance и
+подтверждённая остановка. Завершение одного сегмента не означает всей миссии.
+MISSION_TIMEOUT требует исчерпания глобального бюджета и не скрывает fault.
+
+Приоритеты: неподтверждённая остановка → guard → невалидное исходное наблюдение →
+локализация → потеря дальномера → stale/future → fault контроллера → fault runner →
+PATH_BLOCKED → MISSION_TIMEOUT → GOAL_REACHED. В одном controller_fault ровно один
+из CONTROLLER_TIMEOUT/CONTROLLER_EXCEPTION/INVALID_COMMAND. RUNNER_EXCEPTION и
+INVALID_OBSERVATION допускают partial без выдуманного завершающего observation.
+confirmed=true несовместим с reason STOP_NOT_CONFIRMED; confirmed=false всегда
+даёт этот fault независимо от остальных причин, которые сохраняются в error/trace.
+
+Supervisor wall-clock timeout1с будущего facade требует отдельного процесса и
+отклонения позднего ответа по epoch/step; этот checker не запускает callback и
+не реализует watchdog. Модельная мгновенная остановка не равна отключению моторов.
+
+## Полный manifest и честный partial report — R4
+
+Каждый report содержит manifest с обязательной структурой:
+
+| Поле | Смысл / проверка |
+| --- | --- |
+| trial_id/epoch | Совпадают с session, report, trace и result |
+| wire_revision/wire_schema_sha256 | Точная версия и SHA-256 сырых LF UTF-8 байтов canonical schema |
+| sources.scout / sources.skillforge | Commit40hex и source_sha256 обоих продуктов; обязательны для digital_simulation |
+| scene / scene_sha256 | Разрешённая полная сцена: world, start_pose, plan, sensor noise/failure; hash canonical JSON, связь с session/plan |
+| seed.value / derivation | uint64; identity-u64-v1, без скрытого reseed на сегменте |
+| profile / normalization | Полный фиксированный профиль и si-lab-yaw-clamp-v1, сверка с session |
+| environment | Python и ОС; обязательны для digital_simulation |
+
+Canonical JSON для scene: json.dumps(sort_keys=True, separators=(',', ':'),
+ensure_ascii=False, allow_nan=False), UTF-8, SHA-256. Source digest: тот же
+canonical JSON списка [{path,sha256}], отсортированного по UTF-8 path, для всех
+tracked-файлов чистого checkout указанного commit; sha256 — hash сырых байтов
+файла. Будущий runner обязан записывать проверенный чистый source snapshot.
+Checker проверяет формат source digest, но не скачивает репозиторий и не
+аутентифицирует происхождение: это не доказательство выполненного опыта.
+
+contract_example разрешает null source digests/environment, сохраняя все ключи.
+Все опубликованные literal fixtures имеют именно этот execution. Переименование
+такого примера в digital_simulation отвергается. В памяти тестируется и полная
+структура measured profile с фиктивными metadata; это не результат PoC и не
+сохраняется как измеренный отчёт.
+
+report_complete описывает полноту записи, а не успешность обхода. Полный отчёт
+может закончиться blocked/fault/timeout, но содержит terminal и фактический
+result последнего начатого сегмента; error=null. Results, missing_results и
+not_started_segments образуют непересекающееся покрытие plan. Не начатые цели
+не превращаются в выполненные. Ошибки входят в знаменатель оценки попыток N.
+
+При ошибке runner/наблюдения/сохранения: report_complete=false, error(code,
+at_step,message), точный last_confirmed_step, фактический trace prefix,
+missing_results для начатых без результата и not_started для остальных.
+Если завершающее observation не получено, его не придумывать. Если остановку
+нельзя подтвердить, stop.telemetry=null/confirmed=false и STOP_NOT_CONFIRMED.
+Ошибка записи на недоступный диск не гарантирует сохранения самого partial:
+нужен отдельный резервный путь будущего runner; здесь проверяется формат.
+
+## Повторение и передача SkillForge
+
+```powershell
+python scripts/check_integration_contract.py --examples-dir runs/contract-fixtures
+python scripts/check_contract_clock.py --output runs/contract-clock-check.json
+```
+
+Проверка стандартной библиотекой использует только собственное подмножество JSON
+Schema, с отказом на неизвестный keyword. Это офлайн-проверка проектных fixtures,
+а не универсальный JSON Schema runtime. Для воспроизведения нужен полный checkout
+данного ref или **вся зависимость checker**: check_integration_contract.py,
+contract_schema.py, contract_fixtures.py, contract_checks.py и check_contract_clock.py
+из scripts плюс schema/examples из docs/integration. SHA-256 closure перечислены
+в отчёте; копировать только старые три pinned файла недостаточно.
+
+Следующий шаг: SkillForge явно закрепляет ref/digest этой версии, повторяет её
+проверки и фиксирует согласие или воспроизводимые замечания. Runtime-адаптер,
+ручная приёмка продуктов, аппаратная безопасность и merge остаются отдельными
+решениями. Никаких закупок эта ревизия не разрешает.

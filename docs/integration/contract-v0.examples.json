@@ -1,702 +1,1542 @@
 {
-  "notice": "FORMAT EXAMPLES ONLY; not measured integration results.",
-  "base": {
-    "session": {
-      "schema_version": "scout-skillforge/0.1-draft.2",
-      "session_id": "format-example-seed-1",
-      "type": "session",
-      "profile": "digital_known_map",
-      "frame": "lab_x_right_y_up_yaw_ccw",
-      "dt_s": 0.05,
-      "max_steps": 3600,
-      "max_v_mps": 0.15,
-      "max_omega_rad_s": 0.8,
-      "stop_clearance_m": 0.22,
-      "sensor_range_m": 1,
-      "seed": 1,
-      "controller": {
-        "id": "goal_seeker",
-        "version": 1
-      },
-      "world": {
-        "width_m": 3,
-        "height_m": 2.4,
-        "radius_m": 0.14,
-        "obstacles": [
-          {
-            "x_min": 1.1,
-            "y_min": 1,
-            "x_max": 1.8,
-            "y_max": 1.4
-          }
-        ]
-      },
-      "provenance": {
-        "pose": "ideal_simulation",
-        "map": "ideal_static_map",
-        "range": "synthetic_body_clearance",
-        "computer_vision_executed": false
-      }
-    },
-    "observation": {
-      "schema_version": "scout-skillforge/0.1-draft.2",
-      "session_id": "format-example-seed-1",
-      "type": "observation",
-      "step": 0,
-      "time_s": 0,
-      "pose": {
-        "x_m": 0.6,
-        "y_m": 0.6,
-        "yaw_rad": 0
-      },
-      "target": {
-        "id": "A",
-        "x_m": 2.4,
-        "y_m": 0.6
-      },
-      "v_mps": 0,
-      "omega_rad_s": 0,
-      "sensor_status": "valid",
-      "front_body_clearance_m": 1,
-      "sampled_at_s": 0
-    },
-    "command": {
-      "schema_version": "scout-skillforge/0.1-draft.2",
-      "session_id": "format-example-seed-1",
-      "type": "command",
-      "step": 0,
-      "expires_after_step": 1,
-      "mode": "drive",
-      "v_mps": 0.15,
-      "omega_rad_s": 0
-    },
-    "result": {
-      "schema_version": "scout-skillforge/0.1-draft.2",
-      "session_id": "format-example-seed-1",
-      "type": "result",
+  "notice": "FORMAT FIXTURES ONLY. No adapter, PoC or measured experiment executed.",
+  "literal_reports": {
+    "inspection-then-fault": {
+      "schema_version": "scout-skillforge/0.1-draft.3",
+      "trial_id": "format-trial-1",
+      "epoch": "format-epoch-1",
+      "type": "experiment_report",
       "execution": "contract_example",
-      "scope": "segment",
-      "status": "completed",
-      "reason": "GOAL_REACHED",
-      "stop_confirmed": true,
-      "metrics": {
-        "steps": 240,
-        "duration_s": 12,
-        "distance_m": 1.8,
-        "collision_guard_activations": 0
+      "session": {
+        "schema_version": "scout-skillforge/0.1-draft.3",
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "type": "session",
+        "profile_id": "digital_known_map",
+        "frame": "lab_x_right_y_up_yaw_ccw",
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "seed": 1,
+        "controller": {
+          "id": "goal_seeker",
+          "version": 1
+        },
+        "world": {
+          "width_m": 3,
+          "height_m": 2.4,
+          "radius_m": 0.14,
+          "obstacles": []
+        },
+        "start_pose": {
+          "x_m": 0.6,
+          "y_m": 0.6,
+          "yaw_rad": 0
+        },
+        "plan": [
+          {
+            "segment_id": "A-1",
+            "target_id": "A",
+            "x_m": 0.61,
+            "y_m": 0.6
+          },
+          {
+            "segment_id": "B-1",
+            "target_id": "B",
+            "x_m": 2.4,
+            "y_m": 0.6
+          }
+        ],
+        "provenance": {
+          "pose": "ideal_simulation",
+          "map": "ideal_static_map",
+          "range": "synthetic_body_clearance",
+          "computer_vision_executed": false
+        }
+      },
+      "manifest": {
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "wire_revision": "scout-skillforge/0.1-draft.3",
+        "wire_schema_sha256": "88640878bb3dc2358cd197a6277a497d98e266ec8d7bd4054b1e6429778f1788",
+        "sources": {
+          "scout": {
+            "commit": "547a343a462169461be3a5e33ea6766f83b5b988",
+            "source_sha256": null
+          },
+          "skillforge": {
+            "commit": "0fc2e8d96c6669782945e42bc78357d0aa4609ed",
+            "source_sha256": null
+          }
+        },
+        "scene": {
+          "world": {
+            "width_m": 3,
+            "height_m": 2.4,
+            "radius_m": 0.14,
+            "obstacles": []
+          },
+          "start_pose": {
+            "x_m": 0.6,
+            "y_m": 0.6,
+            "yaw_rad": 0
+          },
+          "plan": [
+            {
+              "segment_id": "A-1",
+              "target_id": "A",
+              "x_m": 0.61,
+              "y_m": 0.6
+            },
+            {
+              "segment_id": "B-1",
+              "target_id": "B",
+              "x_m": 2.4,
+              "y_m": 0.6
+            }
+          ],
+          "sensor_noise_m": 0.002,
+          "sensor_failure_at_s": 0.15
+        },
+        "scene_sha256": "bb428d3c95af4083612c5f4c709eafda1c82b15fa0e2c1ecb7914bc2f1c0b53d",
+        "seed": {
+          "value": 1,
+          "derivation": "identity-u64-v1"
+        },
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "normalization": "si-lab-yaw-clamp-v1",
+        "environment": {
+          "python": null,
+          "os": null
+        }
+      },
+      "plan": [
+        {
+          "segment_id": "A-1",
+          "target_id": "A",
+          "x_m": 0.61,
+          "y_m": 0.6
+        },
+        {
+          "segment_id": "B-1",
+          "target_id": "B",
+          "x_m": 2.4,
+          "y_m": 0.6
+        }
+      ],
+      "trace": [
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 0,
+            "time_s": 0.0,
+            "sampled_at_s": 0.0,
+            "pose": {
+              "x_m": 0.6,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": true,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "navigate",
+          "raw_action": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "requested": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "command",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 0,
+            "expires_after_step": 1,
+            "mode": "drive",
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            }
+          },
+          "rejected_response": null,
+          "applied": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "limitation": "none",
+          "advance": true,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": null
+        },
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 1,
+            "time_s": 0.05,
+            "sampled_at_s": 0.05,
+            "pose": {
+              "x_m": 0.605,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": true,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "navigate",
+          "raw_action": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "requested": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "command",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 1,
+            "expires_after_step": 2,
+            "mode": "drive",
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            }
+          },
+          "rejected_response": null,
+          "applied": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "limitation": "none",
+          "advance": true,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": null
+        },
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 2,
+            "time_s": 0.1,
+            "sampled_at_s": 0.1,
+            "pose": {
+              "x_m": 0.61,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": false,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "inspection",
+          "raw_action": null,
+          "requested": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "command",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 2,
+            "expires_after_step": 3,
+            "mode": "stop",
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            }
+          },
+          "rejected_response": null,
+          "applied": {
+            "v_mps": 0,
+            "omega_rad_s": 0
+          },
+          "limitation": "inspection-stop",
+          "advance": true,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": {
+            "attempted": true,
+            "confirmed": true,
+            "telemetry": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            }
+          }
+        },
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "B-1",
+            "target_id": "B",
+            "step": 3,
+            "time_s": 0.15000000000000002,
+            "sampled_at_s": 0.15000000000000002,
+            "pose": {
+              "x_m": 0.61,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": false,
+            "sensor_status": "unavailable",
+            "front_body_clearance_m": null
+          },
+          "phase": "terminal",
+          "raw_action": null,
+          "requested": null,
+          "rejected_response": null,
+          "applied": null,
+          "limitation": "safety-stop",
+          "advance": false,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": {
+            "attempted": true,
+            "confirmed": true,
+            "telemetry": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            }
+          }
+        }
+      ],
+      "results": [
+        {
+          "schema_version": "scout-skillforge/0.1-draft.3",
+          "trial_id": "format-trial-1",
+          "epoch": "format-epoch-1",
+          "type": "result",
+          "segment_id": "A-1",
+          "target_id": "A",
+          "start_step": 0,
+          "end_step": 2,
+          "scope": "segment",
+          "outcome": {
+            "status": "completed",
+            "reason": "GOAL_REACHED"
+          },
+          "stop_confirmed": true,
+          "metrics": {
+            "steps": 2,
+            "duration_s": 0.1,
+            "distance_m": 0.010000000000000009,
+            "collision_guard_activations": 0
+          }
+        },
+        {
+          "schema_version": "scout-skillforge/0.1-draft.3",
+          "trial_id": "format-trial-1",
+          "epoch": "format-epoch-1",
+          "type": "result",
+          "segment_id": "B-1",
+          "target_id": "B",
+          "start_step": 3,
+          "end_step": 3,
+          "scope": "segment",
+          "outcome": {
+            "status": "fault",
+            "reason": "SENSOR_UNAVAILABLE"
+          },
+          "stop_confirmed": true,
+          "metrics": {
+            "steps": 0,
+            "duration_s": 0.0,
+            "distance_m": 0,
+            "collision_guard_activations": 0
+          }
+        }
+      ],
+      "not_started_segments": [],
+      "missing_results": [],
+      "report_complete": true,
+      "last_confirmed_step": 3,
+      "outcome": {
+        "status": "fault",
+        "reason": "SENSOR_UNAVAILABLE"
+      },
+      "stop": {
+        "attempted": true,
+        "confirmed": true,
+        "telemetry": {
+          "v_mps": 0,
+          "omega_rad_s": 0
+        }
+      },
+      "error": null
+    },
+    "completed-route": {
+      "schema_version": "scout-skillforge/0.1-draft.3",
+      "trial_id": "format-trial-1",
+      "epoch": "format-epoch-1",
+      "type": "experiment_report",
+      "execution": "contract_example",
+      "session": {
+        "schema_version": "scout-skillforge/0.1-draft.3",
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "type": "session",
+        "profile_id": "digital_known_map",
+        "frame": "lab_x_right_y_up_yaw_ccw",
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "seed": 1,
+        "controller": {
+          "id": "goal_seeker",
+          "version": 1
+        },
+        "world": {
+          "width_m": 3,
+          "height_m": 2.4,
+          "radius_m": 0.14,
+          "obstacles": []
+        },
+        "start_pose": {
+          "x_m": 0.6,
+          "y_m": 0.6,
+          "yaw_rad": 0
+        },
+        "plan": [
+          {
+            "segment_id": "A-1",
+            "target_id": "A",
+            "x_m": 0.61,
+            "y_m": 0.6
+          },
+          {
+            "segment_id": "B-1",
+            "target_id": "B",
+            "x_m": 0.61,
+            "y_m": 0.6
+          }
+        ],
+        "provenance": {
+          "pose": "ideal_simulation",
+          "map": "ideal_static_map",
+          "range": "synthetic_body_clearance",
+          "computer_vision_executed": false
+        }
+      },
+      "manifest": {
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "wire_revision": "scout-skillforge/0.1-draft.3",
+        "wire_schema_sha256": "88640878bb3dc2358cd197a6277a497d98e266ec8d7bd4054b1e6429778f1788",
+        "sources": {
+          "scout": {
+            "commit": "547a343a462169461be3a5e33ea6766f83b5b988",
+            "source_sha256": null
+          },
+          "skillforge": {
+            "commit": "0fc2e8d96c6669782945e42bc78357d0aa4609ed",
+            "source_sha256": null
+          }
+        },
+        "scene": {
+          "world": {
+            "width_m": 3,
+            "height_m": 2.4,
+            "radius_m": 0.14,
+            "obstacles": []
+          },
+          "start_pose": {
+            "x_m": 0.6,
+            "y_m": 0.6,
+            "yaw_rad": 0
+          },
+          "plan": [
+            {
+              "segment_id": "A-1",
+              "target_id": "A",
+              "x_m": 0.61,
+              "y_m": 0.6
+            },
+            {
+              "segment_id": "B-1",
+              "target_id": "B",
+              "x_m": 0.61,
+              "y_m": 0.6
+            }
+          ],
+          "sensor_noise_m": 0.002,
+          "sensor_failure_at_s": 0.15
+        },
+        "scene_sha256": "1b89565344b67309563bba38a2b07298350b608775afedcd40f0dfd2a0d2dd78",
+        "seed": {
+          "value": 1,
+          "derivation": "identity-u64-v1"
+        },
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "normalization": "si-lab-yaw-clamp-v1",
+        "environment": {
+          "python": null,
+          "os": null
+        }
+      },
+      "plan": [
+        {
+          "segment_id": "A-1",
+          "target_id": "A",
+          "x_m": 0.61,
+          "y_m": 0.6
+        },
+        {
+          "segment_id": "B-1",
+          "target_id": "B",
+          "x_m": 0.61,
+          "y_m": 0.6
+        }
+      ],
+      "trace": [
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 0,
+            "time_s": 0.0,
+            "sampled_at_s": 0.0,
+            "pose": {
+              "x_m": 0.6,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": true,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "navigate",
+          "raw_action": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "requested": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "command",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 0,
+            "expires_after_step": 1,
+            "mode": "drive",
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            }
+          },
+          "rejected_response": null,
+          "applied": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "limitation": "none",
+          "advance": true,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": null
+        },
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 1,
+            "time_s": 0.05,
+            "sampled_at_s": 0.05,
+            "pose": {
+              "x_m": 0.605,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": true,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "navigate",
+          "raw_action": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "requested": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "command",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 1,
+            "expires_after_step": 2,
+            "mode": "drive",
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            }
+          },
+          "rejected_response": null,
+          "applied": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "limitation": "none",
+          "advance": true,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": null
+        },
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 2,
+            "time_s": 0.1,
+            "sampled_at_s": 0.1,
+            "pose": {
+              "x_m": 0.61,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": false,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "inspection",
+          "raw_action": null,
+          "requested": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "command",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 2,
+            "expires_after_step": 3,
+            "mode": "stop",
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            }
+          },
+          "rejected_response": null,
+          "applied": {
+            "v_mps": 0,
+            "omega_rad_s": 0
+          },
+          "limitation": "inspection-stop",
+          "advance": true,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": {
+            "attempted": true,
+            "confirmed": true,
+            "telemetry": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            }
+          }
+        },
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "B-1",
+            "target_id": "B",
+            "step": 3,
+            "time_s": 0.15000000000000002,
+            "sampled_at_s": 0.15000000000000002,
+            "pose": {
+              "x_m": 0.61,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": false,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "terminal",
+          "raw_action": null,
+          "requested": null,
+          "rejected_response": null,
+          "applied": null,
+          "limitation": "safety-stop",
+          "advance": false,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": {
+            "attempted": true,
+            "confirmed": true,
+            "telemetry": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            }
+          }
+        }
+      ],
+      "results": [
+        {
+          "schema_version": "scout-skillforge/0.1-draft.3",
+          "trial_id": "format-trial-1",
+          "epoch": "format-epoch-1",
+          "type": "result",
+          "segment_id": "A-1",
+          "target_id": "A",
+          "start_step": 0,
+          "end_step": 2,
+          "scope": "segment",
+          "outcome": {
+            "status": "completed",
+            "reason": "GOAL_REACHED"
+          },
+          "stop_confirmed": true,
+          "metrics": {
+            "steps": 2,
+            "duration_s": 0.1,
+            "distance_m": 0.010000000000000009,
+            "collision_guard_activations": 0
+          }
+        },
+        {
+          "schema_version": "scout-skillforge/0.1-draft.3",
+          "trial_id": "format-trial-1",
+          "epoch": "format-epoch-1",
+          "type": "result",
+          "segment_id": "B-1",
+          "target_id": "B",
+          "start_step": 3,
+          "end_step": 3,
+          "scope": "segment",
+          "outcome": {
+            "status": "completed",
+            "reason": "GOAL_REACHED"
+          },
+          "stop_confirmed": true,
+          "metrics": {
+            "steps": 0,
+            "duration_s": 0.0,
+            "distance_m": 0,
+            "collision_guard_activations": 0
+          }
+        }
+      ],
+      "not_started_segments": [],
+      "missing_results": [],
+      "report_complete": true,
+      "last_confirmed_step": 3,
+      "outcome": {
+        "status": "completed",
+        "reason": "GOAL_REACHED"
+      },
+      "stop": {
+        "attempted": true,
+        "confirmed": true,
+        "telemetry": {
+          "v_mps": 0,
+          "omega_rad_s": 0
+        }
+      },
+      "error": null
+    },
+    "blocked": {
+      "schema_version": "scout-skillforge/0.1-draft.3",
+      "trial_id": "format-trial-1",
+      "epoch": "format-epoch-1",
+      "type": "experiment_report",
+      "execution": "contract_example",
+      "session": {
+        "schema_version": "scout-skillforge/0.1-draft.3",
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "type": "session",
+        "profile_id": "digital_known_map",
+        "frame": "lab_x_right_y_up_yaw_ccw",
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "seed": 1,
+        "controller": {
+          "id": "goal_seeker",
+          "version": 1
+        },
+        "world": {
+          "width_m": 3,
+          "height_m": 2.4,
+          "radius_m": 0.14,
+          "obstacles": []
+        },
+        "start_pose": {
+          "x_m": 0.6,
+          "y_m": 0.6,
+          "yaw_rad": 0
+        },
+        "plan": [
+          {
+            "segment_id": "B-1",
+            "target_id": "B",
+            "x_m": 2.4,
+            "y_m": 0.6
+          }
+        ],
+        "provenance": {
+          "pose": "ideal_simulation",
+          "map": "ideal_static_map",
+          "range": "synthetic_body_clearance",
+          "computer_vision_executed": false
+        }
+      },
+      "manifest": {
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "wire_revision": "scout-skillforge/0.1-draft.3",
+        "wire_schema_sha256": "88640878bb3dc2358cd197a6277a497d98e266ec8d7bd4054b1e6429778f1788",
+        "sources": {
+          "scout": {
+            "commit": "547a343a462169461be3a5e33ea6766f83b5b988",
+            "source_sha256": null
+          },
+          "skillforge": {
+            "commit": "0fc2e8d96c6669782945e42bc78357d0aa4609ed",
+            "source_sha256": null
+          }
+        },
+        "scene": {
+          "world": {
+            "width_m": 3,
+            "height_m": 2.4,
+            "radius_m": 0.14,
+            "obstacles": []
+          },
+          "start_pose": {
+            "x_m": 0.6,
+            "y_m": 0.6,
+            "yaw_rad": 0
+          },
+          "plan": [
+            {
+              "segment_id": "B-1",
+              "target_id": "B",
+              "x_m": 2.4,
+              "y_m": 0.6
+            }
+          ],
+          "sensor_noise_m": 0.002,
+          "sensor_failure_at_s": null
+        },
+        "scene_sha256": "986cb03a9c64c4185f997e7ac85fa92199fd1299369cb91ab75ea673c5d135b9",
+        "seed": {
+          "value": 1,
+          "derivation": "identity-u64-v1"
+        },
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "normalization": "si-lab-yaw-clamp-v1",
+        "environment": {
+          "python": null,
+          "os": null
+        }
+      },
+      "plan": [
+        {
+          "segment_id": "B-1",
+          "target_id": "B",
+          "x_m": 2.4,
+          "y_m": 0.6
+        }
+      ],
+      "trace": [
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "B-1",
+            "target_id": "B",
+            "step": 0,
+            "time_s": 0.0,
+            "sampled_at_s": 0.0,
+            "pose": {
+              "x_m": 0.6,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": false,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 0.22
+          },
+          "phase": "terminal",
+          "raw_action": null,
+          "requested": null,
+          "rejected_response": null,
+          "applied": null,
+          "limitation": "safety-stop",
+          "advance": false,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": {
+            "attempted": true,
+            "confirmed": true,
+            "telemetry": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            }
+          }
+        }
+      ],
+      "results": [
+        {
+          "schema_version": "scout-skillforge/0.1-draft.3",
+          "trial_id": "format-trial-1",
+          "epoch": "format-epoch-1",
+          "type": "result",
+          "segment_id": "B-1",
+          "target_id": "B",
+          "start_step": 0,
+          "end_step": 0,
+          "scope": "segment",
+          "outcome": {
+            "status": "blocked",
+            "reason": "PATH_BLOCKED"
+          },
+          "stop_confirmed": true,
+          "metrics": {
+            "steps": 0,
+            "duration_s": 0.0,
+            "distance_m": 0,
+            "collision_guard_activations": 0
+          }
+        }
+      ],
+      "not_started_segments": [],
+      "missing_results": [],
+      "report_complete": true,
+      "last_confirmed_step": 0,
+      "outcome": {
+        "status": "blocked",
+        "reason": "PATH_BLOCKED"
+      },
+      "stop": {
+        "attempted": true,
+        "confirmed": true,
+        "telemetry": {
+          "v_mps": 0,
+          "omega_rad_s": 0
+        }
+      },
+      "error": null
+    },
+    "partial-controller-exception": {
+      "schema_version": "scout-skillforge/0.1-draft.3",
+      "trial_id": "format-trial-1",
+      "epoch": "format-epoch-1",
+      "type": "experiment_report",
+      "execution": "contract_example",
+      "session": {
+        "schema_version": "scout-skillforge/0.1-draft.3",
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "type": "session",
+        "profile_id": "digital_known_map",
+        "frame": "lab_x_right_y_up_yaw_ccw",
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "seed": 1,
+        "controller": {
+          "id": "goal_seeker",
+          "version": 1
+        },
+        "world": {
+          "width_m": 3,
+          "height_m": 2.4,
+          "radius_m": 0.14,
+          "obstacles": []
+        },
+        "start_pose": {
+          "x_m": 0.6,
+          "y_m": 0.6,
+          "yaw_rad": 0
+        },
+        "plan": [
+          {
+            "segment_id": "A-1",
+            "target_id": "A",
+            "x_m": 0.61,
+            "y_m": 0.6
+          },
+          {
+            "segment_id": "B-1",
+            "target_id": "B",
+            "x_m": 2.4,
+            "y_m": 0.6
+          }
+        ],
+        "provenance": {
+          "pose": "ideal_simulation",
+          "map": "ideal_static_map",
+          "range": "synthetic_body_clearance",
+          "computer_vision_executed": false
+        }
+      },
+      "manifest": {
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "wire_revision": "scout-skillforge/0.1-draft.3",
+        "wire_schema_sha256": "88640878bb3dc2358cd197a6277a497d98e266ec8d7bd4054b1e6429778f1788",
+        "sources": {
+          "scout": {
+            "commit": "547a343a462169461be3a5e33ea6766f83b5b988",
+            "source_sha256": null
+          },
+          "skillforge": {
+            "commit": "0fc2e8d96c6669782945e42bc78357d0aa4609ed",
+            "source_sha256": null
+          }
+        },
+        "scene": {
+          "world": {
+            "width_m": 3,
+            "height_m": 2.4,
+            "radius_m": 0.14,
+            "obstacles": []
+          },
+          "start_pose": {
+            "x_m": 0.6,
+            "y_m": 0.6,
+            "yaw_rad": 0
+          },
+          "plan": [
+            {
+              "segment_id": "A-1",
+              "target_id": "A",
+              "x_m": 0.61,
+              "y_m": 0.6
+            },
+            {
+              "segment_id": "B-1",
+              "target_id": "B",
+              "x_m": 2.4,
+              "y_m": 0.6
+            }
+          ],
+          "sensor_noise_m": 0.002,
+          "sensor_failure_at_s": 0.15
+        },
+        "scene_sha256": "bb428d3c95af4083612c5f4c709eafda1c82b15fa0e2c1ecb7914bc2f1c0b53d",
+        "seed": {
+          "value": 1,
+          "derivation": "identity-u64-v1"
+        },
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "normalization": "si-lab-yaw-clamp-v1",
+        "environment": {
+          "python": null,
+          "os": null
+        }
+      },
+      "plan": [
+        {
+          "segment_id": "A-1",
+          "target_id": "A",
+          "x_m": 0.61,
+          "y_m": 0.6
+        },
+        {
+          "segment_id": "B-1",
+          "target_id": "B",
+          "x_m": 2.4,
+          "y_m": 0.6
+        }
+      ],
+      "trace": [
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 0,
+            "time_s": 0.0,
+            "sampled_at_s": 0.0,
+            "pose": {
+              "x_m": 0.6,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": true,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "navigate",
+          "raw_action": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "requested": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "command",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 0,
+            "expires_after_step": 1,
+            "mode": "drive",
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            }
+          },
+          "rejected_response": null,
+          "applied": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "limitation": "none",
+          "advance": true,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": null
+        },
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 1,
+            "time_s": 0.05,
+            "sampled_at_s": 0.05,
+            "pose": {
+              "x_m": 0.605,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": false,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "interrupted",
+          "raw_action": null,
+          "requested": null,
+          "rejected_response": null,
+          "applied": null,
+          "limitation": "interrupted",
+          "advance": false,
+          "guard_activated": false,
+          "controller_fault": "CONTROLLER_EXCEPTION",
+          "local_stop": {
+            "attempted": true,
+            "confirmed": true,
+            "telemetry": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            }
+          }
+        }
+      ],
+      "results": [],
+      "not_started_segments": [
+        "B-1"
+      ],
+      "missing_results": [
+        "A-1"
+      ],
+      "report_complete": false,
+      "last_confirmed_step": 1,
+      "outcome": {
+        "status": "fault",
+        "reason": "CONTROLLER_EXCEPTION"
+      },
+      "stop": {
+        "attempted": true,
+        "confirmed": true,
+        "telemetry": {
+          "v_mps": 0,
+          "omega_rad_s": 0
+        }
+      },
+      "error": {
+        "code": "CONTROLLER_EXCEPTION",
+        "at_step": 1,
+        "message": "Format fixture: injected failure, not an executed controller."
       }
     },
-    "previous_step": -1
-  },
-  "positive_cases": [
-    {
-      "name": "drive",
-      "changes": []
-    },
-    {
-      "name": "blocked-stop",
-      "changes": [
-        [
-          "observation.front_body_clearance_m",
-          0.2
+    "partial-missing-observation": {
+      "schema_version": "scout-skillforge/0.1-draft.3",
+      "trial_id": "format-trial-1",
+      "epoch": "format-epoch-1",
+      "type": "experiment_report",
+      "execution": "contract_example",
+      "session": {
+        "schema_version": "scout-skillforge/0.1-draft.3",
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "type": "session",
+        "profile_id": "digital_known_map",
+        "frame": "lab_x_right_y_up_yaw_ccw",
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "seed": 1,
+        "controller": {
+          "id": "goal_seeker",
+          "version": 1
+        },
+        "world": {
+          "width_m": 3,
+          "height_m": 2.4,
+          "radius_m": 0.14,
+          "obstacles": []
+        },
+        "start_pose": {
+          "x_m": 0.6,
+          "y_m": 0.6,
+          "yaw_rad": 0
+        },
+        "plan": [
+          {
+            "segment_id": "A-1",
+            "target_id": "A",
+            "x_m": 0.61,
+            "y_m": 0.6
+          },
+          {
+            "segment_id": "B-1",
+            "target_id": "B",
+            "x_m": 2.4,
+            "y_m": 0.6
+          }
         ],
-        [
-          "command.mode",
-          "stop"
-        ],
-        [
-          "command.v_mps",
-          0
-        ],
-        [
-          "result.status",
-          "blocked"
-        ],
-        [
-          "result.reason",
-          "PATH_BLOCKED"
-        ],
-        [
-          "result.metrics.steps",
-          0
-        ],
-        [
-          "result.metrics.duration_s",
-          0
-        ],
-        [
-          "result.metrics.distance_m",
-          0
-        ]
-      ]
-    },
-    {
-      "name": "missing-sensor-stop",
-      "changes": [
-        [
-          "observation.sensor_status",
-          "unavailable"
-        ],
-        [
-          "observation.front_body_clearance_m",
-          null
-        ],
-        [
-          "command.mode",
-          "stop"
-        ],
-        [
-          "command.v_mps",
-          0
-        ],
-        [
-          "result.status",
-          "fault"
-        ],
-        [
-          "result.reason",
-          "SENSOR_UNAVAILABLE"
-        ],
-        [
-          "result.metrics.steps",
-          0
-        ],
-        [
-          "result.metrics.duration_s",
-          0
-        ],
-        [
-          "result.metrics.distance_m",
-          0
-        ]
-      ]
-    },
-    {
-      "name": "guard-fault",
-      "changes": [
-        [
-          "result.status",
-          "fault"
-        ],
-        [
-          "result.reason",
-          "FOOTPRINT_GUARD"
-        ],
-        [
-          "result.metrics.collision_guard_activations",
-          1
-        ]
-      ]
-    },
-    {
-      "name": "unconfirmed-stop-fault",
-      "changes": [
-        [
-          "result.status",
-          "fault"
-        ],
-        [
-          "result.reason",
-          "STOP_NOT_CONFIRMED"
-        ],
-        [
-          "result.stop_confirmed",
-          false
-        ]
-      ]
-    },
-    {
-      "name": "stop-fault-outranks-guard",
-      "changes": [
-        [
-          "result.status",
-          "fault"
-        ],
-        [
-          "result.reason",
-          "STOP_NOT_CONFIRMED"
-        ],
-        [
-          "result.stop_confirmed",
-          false
-        ],
-        [
-          "result.metrics.collision_guard_activations",
-          1
-        ]
-      ]
-    }
-  ],
-  "negative_cases": [
-    {
-      "name": "unknown-version",
-      "changes": [
-        [
-          "command.schema_version",
-          "future"
-        ]
-      ]
-    },
-    {
-      "name": "wrong-frame",
-      "changes": [
-        [
-          "session.frame",
-          "image_y_down"
-        ]
-      ]
-    },
-    {
-      "name": "bool-speed",
-      "changes": [
-        [
-          "command.v_mps",
-          true
-        ]
-      ]
-    },
-    {
-      "name": "reverse",
-      "changes": [
-        [
-          "command.v_mps",
-          -0.01
-        ]
-      ]
-    },
-    {
-      "name": "overspeed",
-      "changes": [
-        [
-          "command.v_mps",
-          0.151
-        ]
-      ]
-    },
-    {
-      "name": "turn-limit",
-      "changes": [
-        [
-          "command.omega_rad_s",
-          0.801
-        ]
-      ]
-    },
-    {
-      "name": "wrong-session",
-      "changes": [
-        [
-          "command.session_id",
-          "another"
-        ]
-      ]
-    },
-    {
-      "name": "old-command",
-      "changes": [
-        [
-          "command.step",
-          1
-        ]
-      ]
-    },
-    {
-      "name": "late-ttl",
-      "changes": [
-        [
-          "command.expires_after_step",
-          2
-        ]
-      ]
-    },
-    {
-      "name": "nonzero-stop",
-      "changes": [
-        [
-          "command.mode",
-          "stop"
-        ]
-      ]
-    },
-    {
-      "name": "unknown-field",
-      "changes": [
-        [
-          "command.legacy_wheel_rps",
-          1
-        ]
-      ]
-    },
-    {
-      "name": "not-a-number",
-      "changes": [
-        [
-          "command.v_mps",
-          "NaN"
-        ]
-      ]
-    },
-    {
-      "name": "sensor-lost-drive",
-      "changes": [
-        [
-          "observation.front_body_clearance_m",
-          null
-        ],
-        [
-          "observation.sensor_status",
-          "unavailable"
-        ]
-      ]
-    },
-    {
-      "name": "sensor-null-valid",
-      "changes": [
-        [
-          "observation.front_body_clearance_m",
-          null
-        ]
-      ]
-    },
-    {
-      "name": "blocked-drive",
-      "changes": [
-        [
-          "observation.front_body_clearance_m",
-          0.22
-        ]
-      ]
-    },
-    {
-      "name": "saturated-range-invalid",
-      "changes": [
-        [
-          "observation.front_body_clearance_m",
-          1.01
-        ]
-      ]
-    },
-    {
-      "name": "future-sensor",
-      "changes": [
-        [
-          "observation.sampled_at_s",
-          0.001
-        ]
-      ]
-    },
-    {
-      "name": "stale-sensor",
-      "changes": [
-        [
-          "observation.step",
-          4
-        ],
-        [
-          "observation.time_s",
-          0.2
-        ],
-        [
-          "command.step",
-          4
-        ],
-        [
-          "command.expires_after_step",
-          5
-        ],
-        [
-          "previous_step",
-          3
-        ]
-      ]
-    },
-    {
-      "name": "skipped-step",
-      "changes": [
-        [
-          "previous_step",
-          -2
-        ]
-      ]
-    },
-    {
-      "name": "duplicate-step",
-      "changes": [
-        [
-          "previous_step",
-          0
-        ]
-      ]
-    },
-    {
-      "name": "wrong-time",
-      "changes": [
-        [
-          "observation.time_s",
-          0.01
-        ]
-      ]
-    },
-    {
-      "name": "outside-footprint",
-      "changes": [
-        [
-          "observation.pose.x_m",
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "target-on-obstacle",
-      "changes": [
-        [
-          "observation.target.x_m",
-          1.2
-        ],
-        [
-          "observation.target.y_m",
-          1.2
-        ]
-      ]
-    },
-    {
-      "name": "inverted-box",
-      "changes": [
-        [
-          "session.world.obstacles",
-          [
+        "provenance": {
+          "pose": "ideal_simulation",
+          "map": "ideal_static_map",
+          "range": "synthetic_body_clearance",
+          "computer_vision_executed": false
+        }
+      },
+      "manifest": {
+        "trial_id": "format-trial-1",
+        "epoch": "format-epoch-1",
+        "wire_revision": "scout-skillforge/0.1-draft.3",
+        "wire_schema_sha256": "88640878bb3dc2358cd197a6277a497d98e266ec8d7bd4054b1e6429778f1788",
+        "sources": {
+          "scout": {
+            "commit": "547a343a462169461be3a5e33ea6766f83b5b988",
+            "source_sha256": null
+          },
+          "skillforge": {
+            "commit": "0fc2e8d96c6669782945e42bc78357d0aa4609ed",
+            "source_sha256": null
+          }
+        },
+        "scene": {
+          "world": {
+            "width_m": 3,
+            "height_m": 2.4,
+            "radius_m": 0.14,
+            "obstacles": []
+          },
+          "start_pose": {
+            "x_m": 0.6,
+            "y_m": 0.6,
+            "yaw_rad": 0
+          },
+          "plan": [
             {
-              "x_min": 1.8,
-              "y_min": 1,
-              "x_max": 1.1,
-              "y_max": 1.4
+              "segment_id": "A-1",
+              "target_id": "A",
+              "x_m": 0.61,
+              "y_m": 0.6
+            },
+            {
+              "segment_id": "B-1",
+              "target_id": "B",
+              "x_m": 2.4,
+              "y_m": 0.6
             }
-          ]
-        ]
-      ]
-    },
-    {
-      "name": "unconfirmed-completion",
-      "changes": [
-        [
-          "result.stop_confirmed",
-          false
-        ]
-      ]
-    },
-    {
-      "name": "result-time-mismatch",
-      "changes": [
-        [
-          "result.metrics.duration_s",
-          13
-        ]
-      ]
-    },
-    {
-      "name": "sensor-failure-cannot-complete",
-      "changes": [
-        [
-          "observation.sensor_status",
-          "unavailable"
-        ],
-        [
-          "observation.front_body_clearance_m",
-          null
-        ],
-        [
-          "command.mode",
-          "stop"
-        ],
-        [
-          "command.v_mps",
-          0
-        ],
-        [
-          "result.metrics.steps",
-          0
-        ],
-        [
-          "result.metrics.duration_s",
-          0
-        ],
-        [
-          "result.metrics.distance_m",
-          0
-        ]
-      ]
-    },
-    {
-      "name": "blocked-path-cannot-complete",
-      "changes": [
-        [
-          "observation.front_body_clearance_m",
-          0.2
-        ],
-        [
-          "command.mode",
-          "stop"
-        ],
-        [
-          "command.v_mps",
-          0
-        ],
-        [
-          "result.metrics.steps",
-          0
-        ],
-        [
-          "result.metrics.duration_s",
-          0
-        ],
-        [
-          "result.metrics.distance_m",
-          0
-        ]
-      ]
-    },
-    {
-      "name": "guard-cannot-complete",
-      "changes": [
-        [
-          "result.metrics.collision_guard_activations",
-          1
-        ]
-      ]
-    },
-    {
-      "name": "guard-cannot-be-blocked",
-      "changes": [
-        [
-          "result.metrics.collision_guard_activations",
-          1
-        ],
-        [
-          "result.status",
-          "blocked"
-        ],
-        [
-          "result.reason",
-          "PATH_BLOCKED"
-        ]
-      ]
-    },
-    {
-      "name": "unconfirmed-stop-wrong-reason",
-      "changes": [
-        [
-          "result.stop_confirmed",
-          false
-        ],
-        [
-          "result.status",
-          "fault"
-        ],
-        [
-          "result.reason",
-          "SENSOR_UNAVAILABLE"
-        ]
-      ]
-    },
-    {
-      "name": "impossible-distance",
-      "changes": [
-        [
-          "result.metrics.distance_m",
-          2.0
-        ]
-      ]
-    },
-    {
-      "name": "result-precedes-observation",
-      "changes": [
-        [
-          "previous_step",
-          0
-        ],
-        [
-          "observation.step",
-          1
-        ],
-        [
-          "observation.time_s",
-          0.05
-        ],
-        [
-          "command.step",
-          1
-        ],
-        [
-          "command.expires_after_step",
-          2
-        ],
-        [
-          "result.metrics.steps",
-          0
-        ],
-        [
-          "result.metrics.duration_s",
-          0
-        ],
-        [
-          "result.metrics.distance_m",
-          0
-        ]
-      ]
-    },
-    {
-      "name": "advance-after-sensor-failure",
-      "changes": [
-        [
-          "observation.sensor_status",
-          "unavailable"
-        ],
-        [
-          "observation.front_body_clearance_m",
-          null
-        ],
-        [
-          "command.mode",
-          "stop"
-        ],
-        [
-          "command.v_mps",
-          0
-        ],
-        [
-          "result.status",
-          "fault"
-        ],
-        [
-          "result.reason",
-          "SENSOR_UNAVAILABLE"
-        ]
-      ]
-    },
-    {
-      "name": "advance-after-path-blocked",
-      "changes": [
-        [
-          "observation.front_body_clearance_m",
-          0.2
-        ],
-        [
-          "command.mode",
-          "stop"
-        ],
-        [
-          "command.v_mps",
-          0
-        ],
-        [
-          "result.status",
-          "blocked"
-        ],
-        [
-          "result.reason",
-          "PATH_BLOCKED"
-        ]
-      ]
+          ],
+          "sensor_noise_m": 0.002,
+          "sensor_failure_at_s": 0.15
+        },
+        "scene_sha256": "bb428d3c95af4083612c5f4c709eafda1c82b15fa0e2c1ecb7914bc2f1c0b53d",
+        "seed": {
+          "value": 1,
+          "derivation": "identity-u64-v1"
+        },
+        "profile": {
+          "dt_s": 0.05,
+          "max_steps": 3600,
+          "max_v_mps": 0.15,
+          "max_omega_rad_s": 0.8,
+          "stop_clearance_m": 0.22,
+          "sensor_range_m": 1.0,
+          "arrival_tolerance_m": 0.025,
+          "controller_timeout_s": 1.0
+        },
+        "normalization": "si-lab-yaw-clamp-v1",
+        "environment": {
+          "python": null,
+          "os": null
+        }
+      },
+      "plan": [
+        {
+          "segment_id": "A-1",
+          "target_id": "A",
+          "x_m": 0.61,
+          "y_m": 0.6
+        },
+        {
+          "segment_id": "B-1",
+          "target_id": "B",
+          "x_m": 2.4,
+          "y_m": 0.6
+        }
+      ],
+      "trace": [
+        {
+          "observation": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "observation",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 0,
+            "time_s": 0.0,
+            "sampled_at_s": 0.0,
+            "pose": {
+              "x_m": 0.6,
+              "y_m": 0.6,
+              "yaw_rad": 0
+            },
+            "velocity": {
+              "v_mps": 0,
+              "omega_rad_s": 0
+            },
+            "motion_enabled": true,
+            "sensor_status": "valid",
+            "front_body_clearance_m": 1
+          },
+          "phase": "navigate",
+          "raw_action": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "requested": {
+            "schema_version": "scout-skillforge/0.1-draft.3",
+            "trial_id": "format-trial-1",
+            "epoch": "format-epoch-1",
+            "type": "command",
+            "segment_id": "A-1",
+            "target_id": "A",
+            "step": 0,
+            "expires_after_step": 1,
+            "mode": "drive",
+            "velocity": {
+              "v_mps": 0.1,
+              "omega_rad_s": 0
+            }
+          },
+          "rejected_response": null,
+          "applied": {
+            "v_mps": 0.1,
+            "omega_rad_s": 0
+          },
+          "limitation": "none",
+          "advance": true,
+          "guard_activated": false,
+          "controller_fault": null,
+          "local_stop": null
+        }
+      ],
+      "results": [],
+      "not_started_segments": [
+        "B-1"
+      ],
+      "missing_results": [
+        "A-1"
+      ],
+      "report_complete": false,
+      "last_confirmed_step": 1,
+      "outcome": {
+        "status": "fault",
+        "reason": "INVALID_OBSERVATION"
+      },
+      "stop": {
+        "attempted": true,
+        "confirmed": true,
+        "telemetry": {
+          "v_mps": 0,
+          "omega_rad_s": 0
+        }
+      },
+      "error": {
+        "code": "INVALID_OBSERVATION",
+        "at_step": 1,
+        "message": "Format fixture: injected failure, not an executed controller."
+      }
     }
-  ]
+  },
+  "generated_reports": {
+    "late-short-segment": {
+      "start_step": 280,
+      "end_step": 300
+    },
+    "full-budget-terminal": {
+      "start_step": 0,
+      "end_step": 3600
+    }
+  }
 }

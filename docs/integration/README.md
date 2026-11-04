@@ -1,5 +1,12 @@
 # INTEGRATION-01B — проект интеграции Scout ↔ SkillForge
 
+Актуальная canonical-ревизия: [draft.3](contract-v0.md),
+[чекпоинт и исходные проверки](../reviews/contract-draft3.md). Включены принятые
+как требования R2/R4/SCOUT-C1 из SkillForge ref
+`0fc2e8d96c6669782945e42bc78357d0aa4609ed`. Формат и fixture checker реализованы;
+ожидается явная встречная проверка/repin нового ref/digest. Runtime не реализован.
+Последующие исторические срезы описывают исследованную базу, а не принятие wire.
+
 Статус: **предложение для согласования, адаптер не реализован**. Основание:
 [Scout #3](https://github.com/x3-team/Scout/issues/3) и
 [SkillForge #8](https://github.com/x3-team/SkillForge/issues/8).

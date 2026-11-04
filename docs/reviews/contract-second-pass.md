@@ -1,5 +1,9 @@
 # Повторное ревью контракта Scout ↔ SkillForge
 
+Продолжение: [canonical draft.3 и acceptance fixtures](contract-draft3.md).
+Ниже сохранено историческое ревью draft.2 на указанном ref; текущий checker
+уже проверяет новую ревизию, а не воспроизводит старые пробелы как успешный тест.
+
 Дата: 2026-11-04. По дополнительному запросу владельца повторно прочитаны
 полный [контракт](../integration/contract-v0.md), schema/examples/checker,
 фактические mission/ports Scout и встречное предложение SkillForge PR #10

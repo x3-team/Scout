@@ -144,6 +144,25 @@ def validate(exchange, schema):
     require(result['status'] == 'fault' or result['stop_confirmed'], 'unconfirmed stop must be fault')
     metrics = result['metrics']
     require(abs(metrics['duration_s'] - metrics['steps'] * session['dt_s']) <= 1e-9, 'result model clock')
+    require(metrics['distance_m'] <= session['max_v_mps'] * metrics['duration_s'] + 1e-9,
+            'distance exceeds the profile speed/time bound')
+    require(metrics['steps'] >= obs['step'], 'result precedes observation')
+    # Faults outrank a blocked path. Fail-closed sensor/range stops terminate
+    # this segment; no future advance may turn them into a successful outcome.
+    if not result['stop_confirmed']:
+        require(result['status'] == 'fault' and result['reason'] == 'STOP_NOT_CONFIRMED',
+                'unconfirmed stop outcome')
+    elif metrics['collision_guard_activations']:
+        require(result['status'] == 'fault' and result['reason'] == 'FOOTPRINT_GUARD',
+                'guard activation outcome')
+    elif distance is None:
+        require(result['status'] == 'fault' and result['reason'] == 'SENSOR_UNAVAILABLE',
+                'missing sensor outcome')
+        require(metrics['steps'] == obs['step'], 'sensor failure must terminate without advancing')
+    elif distance <= session['stop_clearance_m']:
+        require(result['status'] == 'blocked' and result['reason'] == 'PATH_BLOCKED',
+                'blocked path outcome')
+        require(metrics['steps'] == obs['step'], 'blocked path must terminate without advancing')
 
 
 def changed(base, changes):

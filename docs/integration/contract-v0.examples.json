@@ -115,6 +115,18 @@
         [
           "result.reason",
           "PATH_BLOCKED"
+        ],
+        [
+          "result.metrics.steps",
+          0
+        ],
+        [
+          "result.metrics.duration_s",
+          0
+        ],
+        [
+          "result.metrics.distance_m",
+          0
         ]
       ]
     },
@@ -144,6 +156,73 @@
         [
           "result.reason",
           "SENSOR_UNAVAILABLE"
+        ],
+        [
+          "result.metrics.steps",
+          0
+        ],
+        [
+          "result.metrics.duration_s",
+          0
+        ],
+        [
+          "result.metrics.distance_m",
+          0
+        ]
+      ]
+    },
+    {
+      "name": "guard-fault",
+      "changes": [
+        [
+          "result.status",
+          "fault"
+        ],
+        [
+          "result.reason",
+          "FOOTPRINT_GUARD"
+        ],
+        [
+          "result.metrics.collision_guard_activations",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "unconfirmed-stop-fault",
+      "changes": [
+        [
+          "result.status",
+          "fault"
+        ],
+        [
+          "result.reason",
+          "STOP_NOT_CONFIRMED"
+        ],
+        [
+          "result.stop_confirmed",
+          false
+        ]
+      ]
+    },
+    {
+      "name": "stop-fault-outranks-guard",
+      "changes": [
+        [
+          "result.status",
+          "fault"
+        ],
+        [
+          "result.reason",
+          "STOP_NOT_CONFIRMED"
+        ],
+        [
+          "result.stop_confirmed",
+          false
+        ],
+        [
+          "result.metrics.collision_guard_activations",
+          1
         ]
       ]
     }
@@ -411,6 +490,211 @@
         [
           "result.metrics.duration_s",
           13
+        ]
+      ]
+    },
+    {
+      "name": "sensor-failure-cannot-complete",
+      "changes": [
+        [
+          "observation.sensor_status",
+          "unavailable"
+        ],
+        [
+          "observation.front_body_clearance_m",
+          null
+        ],
+        [
+          "command.mode",
+          "stop"
+        ],
+        [
+          "command.v_mps",
+          0
+        ],
+        [
+          "result.metrics.steps",
+          0
+        ],
+        [
+          "result.metrics.duration_s",
+          0
+        ],
+        [
+          "result.metrics.distance_m",
+          0
+        ]
+      ]
+    },
+    {
+      "name": "blocked-path-cannot-complete",
+      "changes": [
+        [
+          "observation.front_body_clearance_m",
+          0.2
+        ],
+        [
+          "command.mode",
+          "stop"
+        ],
+        [
+          "command.v_mps",
+          0
+        ],
+        [
+          "result.metrics.steps",
+          0
+        ],
+        [
+          "result.metrics.duration_s",
+          0
+        ],
+        [
+          "result.metrics.distance_m",
+          0
+        ]
+      ]
+    },
+    {
+      "name": "guard-cannot-complete",
+      "changes": [
+        [
+          "result.metrics.collision_guard_activations",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "guard-cannot-be-blocked",
+      "changes": [
+        [
+          "result.metrics.collision_guard_activations",
+          1
+        ],
+        [
+          "result.status",
+          "blocked"
+        ],
+        [
+          "result.reason",
+          "PATH_BLOCKED"
+        ]
+      ]
+    },
+    {
+      "name": "unconfirmed-stop-wrong-reason",
+      "changes": [
+        [
+          "result.stop_confirmed",
+          false
+        ],
+        [
+          "result.status",
+          "fault"
+        ],
+        [
+          "result.reason",
+          "SENSOR_UNAVAILABLE"
+        ]
+      ]
+    },
+    {
+      "name": "impossible-distance",
+      "changes": [
+        [
+          "result.metrics.distance_m",
+          2.0
+        ]
+      ]
+    },
+    {
+      "name": "result-precedes-observation",
+      "changes": [
+        [
+          "previous_step",
+          0
+        ],
+        [
+          "observation.step",
+          1
+        ],
+        [
+          "observation.time_s",
+          0.05
+        ],
+        [
+          "command.step",
+          1
+        ],
+        [
+          "command.expires_after_step",
+          2
+        ],
+        [
+          "result.metrics.steps",
+          0
+        ],
+        [
+          "result.metrics.duration_s",
+          0
+        ],
+        [
+          "result.metrics.distance_m",
+          0
+        ]
+      ]
+    },
+    {
+      "name": "advance-after-sensor-failure",
+      "changes": [
+        [
+          "observation.sensor_status",
+          "unavailable"
+        ],
+        [
+          "observation.front_body_clearance_m",
+          null
+        ],
+        [
+          "command.mode",
+          "stop"
+        ],
+        [
+          "command.v_mps",
+          0
+        ],
+        [
+          "result.status",
+          "fault"
+        ],
+        [
+          "result.reason",
+          "SENSOR_UNAVAILABLE"
+        ]
+      ]
+    },
+    {
+      "name": "advance-after-path-blocked",
+      "changes": [
+        [
+          "observation.front_body_clearance_m",
+          0.2
+        ],
+        [
+          "command.mode",
+          "stop"
+        ],
+        [
+          "command.v_mps",
+          0
+        ],
+        [
+          "result.status",
+          "blocked"
+        ],
+        [
+          "result.reason",
+          "PATH_BLOCKED"
         ]
       ]
     }

@@ -91,6 +91,6 @@ watchdog. Процесс изолирует выполнение контрол�
 
 ## CI access to the separate worker
 
-SkillForge is private. The ordinary Scout GITHUB_TOKEN cannot read it. Set the Scout repository Actions secret `SCOUT_SKILLFORGE_READ_TOKEN` to a fine-grained token with only Contents: read for x3-team/SkillForge; never put it in source or a PR comment. This draft workflow uses it only for the separate pinned checkout, with persist-credentials disabled. Review workflow changes before running a privileged job; do not expose the secret to untrusted pull requests.
+Общий runtime CI перенесён в [SkillForge PR #13](https://github.com/x3-team/SkillForge/pull/13), где штатный read-only GITHUB_TOKEN может читать собственный приватный репозиторий и публичный Scout. [Проверенный запуск](https://github.com/x3-team/SkillForge/actions/runs/41884975702): 4/4 Windows/Ubuntu × Python 3.12/3.13, реальные worker tests и полный маршрут без пропусков. Код обоих продуктов закреплён полными SHA.
 
-Supervisor tests run first without that credential. Missing access fails the integration job explicitly; skipped real-worker tests are not a successful Windows/Linux integration acceptance. No source snapshot of private SkillForge is published in Scout.
+Новый secret SCOUT_SKILLFORGE_READ_TOKEN больше не нужен. Прежние красные jobs остаются историческим свидетельством блокера доступа. Scout CI теперь честно называется independent supervisor: real-worker tests там явно skipped и не считаются интеграционной приёмкой; её подтверждает отдельный полный CI выше. При изменении runtime нужно обновлять оба pin в общем workflow и получать новый успешный прогон. Source snapshots приватного SkillForge в Scout не публикуются. Видимость репозиториев и права не изменялись.

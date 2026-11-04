@@ -1,0 +1,14 @@
+{
+  "archive": "paired-route-adecc83a.zip",
+  "sha256": "74fc8236975014fc0aebae3cd0eb227c216a8a295ddbcaf234aabd87d85982c7",
+  "bytes": 797982,
+  "files": 91,
+  "scout_code_ref": "adecc83a0e9818910e1fb2333546adab930f9c66",
+  "skillforge_ref": "fa57ef94ce64539f19f8fdd75210a5d25ebb2da8",
+  "environment": "Linux / CPython 3.12.14",
+  "source_kind": "79 Scout and 104 worker tracked blobs verified against immutable Git trees before execution",
+  "primary_runs": 8,
+  "executions_including_repeats": 16,
+  "acceptance_passed": true,
+  "scope": "Offline digital full route, synthetic inspection and paired baseline; no camera or hardware"
+}

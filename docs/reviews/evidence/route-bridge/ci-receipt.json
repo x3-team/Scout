@@ -1,0 +1,360 @@
+{
+  "workflow_run": 41884975702,
+  "workflow_commit": "c2f49656d018ac1227d060426960bd8329ea5e76",
+  "workflow_repository": "x3-team/SkillForge",
+  "scout_code_ref": "adecc83a0e9818910e1fb2333546adab930f9c66",
+  "skillforge_ref": "fa57ef94ce64539f19f8fdd75210a5d25ebb2da8",
+  "acceptance": "4/4 jobs success; actual worker and full route executed without additional credentials",
+  "jobs": [
+    {
+      "job_id": 126766884702,
+      "name": "paired (ubuntu-latest, 3.13)",
+      "conclusion": "success",
+      "tests": [
+        12,
+        30,
+        20
+      ],
+      "real_worker_tests_skipped": false,
+      "acceptance_passed": true,
+      "repeats": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "primary": [
+        {
+          "scenario": "normal",
+          "controller": "scout_baseline",
+          "reason": "ROUTE_FINISHED",
+          "steps": 981,
+          "distance_m": 5.924999999999997
+        },
+        {
+          "scenario": "normal",
+          "controller": "skillforge_goal_seeker",
+          "reason": "GOAL_REACHED",
+          "steps": 899,
+          "distance_m": 5.909998119712646
+        },
+        {
+          "scenario": "deviations",
+          "controller": "scout_baseline",
+          "reason": "ROUTE_FINISHED",
+          "steps": 981,
+          "distance_m": 5.924999999999997
+        },
+        {
+          "scenario": "deviations",
+          "controller": "skillforge_goal_seeker",
+          "reason": "GOAL_REACHED",
+          "steps": 899,
+          "distance_m": 5.909998119712646
+        },
+        {
+          "scenario": "blocked",
+          "controller": "scout_baseline",
+          "reason": "PATH_BLOCKED",
+          "steps": 72,
+          "distance_m": 0.5400000000000004
+        },
+        {
+          "scenario": "blocked",
+          "controller": "skillforge_goal_seeker",
+          "reason": "PATH_BLOCKED",
+          "steps": 72,
+          "distance_m": 0.5400000000000004
+        },
+        {
+          "scenario": "sensor-failure",
+          "controller": "scout_baseline",
+          "reason": "SENSOR_UNAVAILABLE",
+          "steps": 40,
+          "distance_m": 0.3000000000000025
+        },
+        {
+          "scenario": "sensor-failure",
+          "controller": "skillforge_goal_seeker",
+          "reason": "SENSOR_UNAVAILABLE",
+          "steps": 40,
+          "distance_m": 0.3000000000000025
+        }
+      ]
+    },
+    {
+      "job_id": 126766885341,
+      "name": "paired (windows-latest, 3.13)",
+      "conclusion": "success",
+      "tests": [
+        12,
+        30,
+        20
+      ],
+      "real_worker_tests_skipped": false,
+      "acceptance_passed": true,
+      "repeats": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "primary": [
+        {
+          "scenario": "normal",
+          "controller": "scout_baseline",
+          "reason": "ROUTE_FINISHED",
+          "steps": 981,
+          "distance_m": 5.924999999999997
+        },
+        {
+          "scenario": "normal",
+          "controller": "skillforge_goal_seeker",
+          "reason": "GOAL_REACHED",
+          "steps": 899,
+          "distance_m": 5.909998119712646
+        },
+        {
+          "scenario": "deviations",
+          "controller": "scout_baseline",
+          "reason": "ROUTE_FINISHED",
+          "steps": 981,
+          "distance_m": 5.924999999999997
+        },
+        {
+          "scenario": "deviations",
+          "controller": "skillforge_goal_seeker",
+          "reason": "GOAL_REACHED",
+          "steps": 899,
+          "distance_m": 5.909998119712646
+        },
+        {
+          "scenario": "blocked",
+          "controller": "scout_baseline",
+          "reason": "PATH_BLOCKED",
+          "steps": 72,
+          "distance_m": 0.5400000000000004
+        },
+        {
+          "scenario": "blocked",
+          "controller": "skillforge_goal_seeker",
+          "reason": "PATH_BLOCKED",
+          "steps": 72,
+          "distance_m": 0.5400000000000004
+        },
+        {
+          "scenario": "sensor-failure",
+          "controller": "scout_baseline",
+          "reason": "SENSOR_UNAVAILABLE",
+          "steps": 40,
+          "distance_m": 0.3000000000000025
+        },
+        {
+          "scenario": "sensor-failure",
+          "controller": "skillforge_goal_seeker",
+          "reason": "SENSOR_UNAVAILABLE",
+          "steps": 40,
+          "distance_m": 0.3000000000000025
+        }
+      ]
+    },
+    {
+      "job_id": 126766885369,
+      "name": "paired (windows-latest, 3.12)",
+      "conclusion": "success",
+      "tests": [
+        12,
+        30,
+        20
+      ],
+      "real_worker_tests_skipped": false,
+      "acceptance_passed": true,
+      "repeats": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "primary": [
+        {
+          "scenario": "normal",
+          "controller": "scout_baseline",
+          "reason": "ROUTE_FINISHED",
+          "steps": 981,
+          "distance_m": 5.924999999999997
+        },
+        {
+          "scenario": "normal",
+          "controller": "skillforge_goal_seeker",
+          "reason": "GOAL_REACHED",
+          "steps": 899,
+          "distance_m": 5.909998119712646
+        },
+        {
+          "scenario": "deviations",
+          "controller": "scout_baseline",
+          "reason": "ROUTE_FINISHED",
+          "steps": 981,
+          "distance_m": 5.924999999999997
+        },
+        {
+          "scenario": "deviations",
+          "controller": "skillforge_goal_seeker",
+          "reason": "GOAL_REACHED",
+          "steps": 899,
+          "distance_m": 5.909998119712646
+        },
+        {
+          "scenario": "blocked",
+          "controller": "scout_baseline",
+          "reason": "PATH_BLOCKED",
+          "steps": 72,
+          "distance_m": 0.5400000000000004
+        },
+        {
+          "scenario": "blocked",
+          "controller": "skillforge_goal_seeker",
+          "reason": "PATH_BLOCKED",
+          "steps": 72,
+          "distance_m": 0.5400000000000004
+        },
+        {
+          "scenario": "sensor-failure",
+          "controller": "scout_baseline",
+          "reason": "SENSOR_UNAVAILABLE",
+          "steps": 40,
+          "distance_m": 0.3000000000000025
+        },
+        {
+          "scenario": "sensor-failure",
+          "controller": "skillforge_goal_seeker",
+          "reason": "SENSOR_UNAVAILABLE",
+          "steps": 40,
+          "distance_m": 0.3000000000000025
+        }
+      ]
+    },
+    {
+      "job_id": 126766886369,
+      "name": "paired (ubuntu-latest, 3.12)",
+      "conclusion": "success",
+      "tests": [
+        12,
+        30,
+        20
+      ],
+      "real_worker_tests_skipped": false,
+      "acceptance_passed": true,
+      "repeats": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "primary": [
+        {
+          "scenario": "normal",
+          "controller": "scout_baseline",
+          "reason": "ROUTE_FINISHED",
+          "steps": 981,
+          "distance_m": 5.924999999999997
+        },
+        {
+          "scenario": "normal",
+          "controller": "skillforge_goal_seeker",
+          "reason": "GOAL_REACHED",
+          "steps": 899,
+          "distance_m": 5.909998119712646
+        },
+        {
+          "scenario": "deviations",
+          "controller": "scout_baseline",
+          "reason": "ROUTE_FINISHED",
+          "steps": 981,
+          "distance_m": 5.924999999999997
+        },
+        {
+          "scenario": "deviations",
+          "controller": "skillforge_goal_seeker",
+          "reason": "GOAL_REACHED",
+          "steps": 899,
+          "distance_m": 5.909998119712646
+        },
+        {
+          "scenario": "blocked",
+          "controller": "scout_baseline",
+          "reason": "PATH_BLOCKED",
+          "steps": 72,
+          "distance_m": 0.5400000000000004
+        },
+        {
+          "scenario": "blocked",
+          "controller": "skillforge_goal_seeker",
+          "reason": "PATH_BLOCKED",
+          "steps": 72,
+          "distance_m": 0.5400000000000004
+        },
+        {
+          "scenario": "sensor-failure",
+          "controller": "scout_baseline",
+          "reason": "SENSOR_UNAVAILABLE",
+          "steps": 40,
+          "distance_m": 0.3000000000000025
+        },
+        {
+          "scenario": "sensor-failure",
+          "controller": "skillforge_goal_seeker",
+          "reason": "SENSOR_UNAVAILABLE",
+          "steps": 40,
+          "distance_m": 0.3000000000000025
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13351296057,
+      "name": "scout-paired-runtime-ubuntu-latest-3.12",
+      "digest": "sha256:e2d1f0f0ed3b56088b03fb4821e43eaa2a4e12d84f951ad5b4c52496679677ba",
+      "size_in_bytes": 892223,
+      "expires_at": "2026-11-18T18:13:52Z"
+    },
+    {
+      "id": 13350249633,
+      "name": "scout-paired-runtime-ubuntu-latest-3.13",
+      "digest": "sha256:96ab46d12bbfde05ee2cf3ed7cdfb085f4f2a1a3d9ca4575ae41de2caa56b7c1",
+      "size_in_bytes": 892233,
+      "expires_at": "2026-11-18T18:13:51Z"
+    },
+    {
+      "id": 13350223905,
+      "name": "scout-paired-runtime-windows-latest-3.13",
+      "digest": "sha256:f638e23a7e0cb325236cf4ad739b0b0b3a20076f3c76fc8d035de82ce3b78314",
+      "size_in_bytes": 902289,
+      "expires_at": "2026-11-18T18:14:24Z"
+    },
+    {
+      "id": 13349944295,
+      "name": "scout-paired-runtime-windows-latest-3.12",
+      "digest": "sha256:5194058779cae1ab0b1e097017649bfeccb337f367f70fb6f5d0b8424977dd9d",
+      "size_in_bytes": 902269,
+      "expires_at": "2026-11-18T18:14:13Z"
+    }
+  ]
+}

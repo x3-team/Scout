@@ -78,5 +78,7 @@ GoalSeeker reports проходят неизменённый canonical checker. 
 Набор мал: вывод о превосходстве контроллера, CV-точности, железе или sim2real не
 делается. Продуктовые ручные приёмки остаются открыты. Merge и закупки запрещены
 без согласования. [CI access](controller-bridge.md#ci-access-to-the-separate-worker):
-нужен read-only SCOUT_SKILLFORGE_READ_TOKEN; без него интеграционные jobs красные,
-успешные независимые supervisor tests не считаются Windows runtime acceptance.
+полный runtime выполняется в приватном SkillForge обычным read-only токеном,
+без нового secret. Прогон 41884975702 завершён 4/4 success на Windows/Ubuntu ×
+Python 3.12/3.13. В Scout отдельно остаются независимые supervisor tests; они не
+подменяют реальные worker checks. Изменение runtime требует нового repin/CI.

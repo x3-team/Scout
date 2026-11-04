@@ -1,0 +1,8 @@
+{
+  "input_kind": "photograph",
+  "pairs": [
+    {"id": "tuning-001", "scene_id": "table-session-a", "split": "tuning", "reference": "photos/tuning-reference.jpg", "current": "photos/tuning-extra-card.jpg", "label": "CHANGED"},
+    {"id": "eval-positive-001", "scene_id": "table-session-b", "split": "evaluation", "reference": "photos/evaluation-reference.jpg", "current": "photos/evaluation-extra-card.jpg", "label": "CHANGED"},
+    {"id": "eval-negative-001", "scene_id": "table-session-b", "split": "evaluation", "reference": "photos/evaluation-reference.jpg", "current": "photos/evaluation-unchanged.jpg", "label": "UNCHANGED"}
+  ]
+}

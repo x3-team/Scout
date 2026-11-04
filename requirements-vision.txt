@@ -1,0 +1,3 @@
+# Optional SCOUT-02 CPU image processing; SCOUT-01 needs neither dependency.
+numpy==2.2.6
+opencv-python-headless==4.12.0.88

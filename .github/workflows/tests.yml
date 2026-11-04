@@ -46,7 +46,8 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Install optional CPU vision dependencies
-        run: python -m pip install --only-binary=:all: -r requirements-vision.txt
+        run: |
+          python -m pip install --only-binary=:all: -r requirements-vision.txt
       - name: Pixel inspection and held-out evaluation tests
         run: python -m unittest discover -s vision_tests -v
       - name: Generate clearly synthetic image reports and printable board

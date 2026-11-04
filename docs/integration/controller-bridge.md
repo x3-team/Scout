@@ -5,8 +5,8 @@ offline-этап. Canonical wire принят на Scout
 `0aa463e9e3c570e7a56e24f0255a0d910cf433a5`; schema SHA-256
 `88640878bb3dc2358cd197a6277a497d98e266ec8d7bd4054b1e6429778f1788`.
 Публичный worker получен из [SkillForge PR #12](https://github.com/x3-team/SkillForge/pull/12),
-точный ref `0df4b22fd8c01f526be3212acea362af2d52f1be`,
-[его API](https://github.com/x3-team/SkillForge/blob/0df4b22fd8c01f526be3212acea362af2d52f1be/docs/integration/SCOUT-WORKER.md).
+точный ref `fa57ef94ce64539f19f8fdd75210a5d25ebb2da8`,
+[его API](https://github.com/x3-team/SkillForge/blob/fa57ef94ce64539f19f8fdd75210a5d25ebb2da8/docs/integration/SCOUT-WORKER.md).
 
 ## Проверяемая цель этого этапа
 
@@ -86,3 +86,9 @@ pinned checkout SkillForge; автоматический Windows не выдаё
 Python stop, supervisor и модель мгновенного торможения не являются аппаратным
 watchdog. Процесс изолирует выполнение контроллера, но не является sandbox для
 произвольного недоверенного кода. Публичный worker — проверенный код двух проектов.
+
+## CI access to the separate worker
+
+SkillForge is private. The ordinary Scout GITHUB_TOKEN cannot read it. Set the Scout repository Actions secret `SCOUT_SKILLFORGE_READ_TOKEN` to a fine-grained token with only Contents: read for x3-team/SkillForge; never put it in source or a PR comment. This draft workflow uses it only for the separate pinned checkout, with persist-credentials disabled. Review workflow changes before running a privileged job; do not expose the secret to untrusted pull requests.
+
+Supervisor tests run first without that credential. Missing access fails the integration job explicitly; skipped real-worker tests are not a successful Windows/Linux integration acceptance. No source snapshot of private SkillForge is published in Scout.

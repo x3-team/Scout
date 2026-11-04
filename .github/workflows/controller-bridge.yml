@@ -17,15 +17,27 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          repository: x3-team/SkillForge
-          ref: 0df4b22fd8c01f526be3212acea362af2d52f1be
-          path: .ci-skillforge
-          persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: ${{ matrix.python }}
+      - name: Supervisor tests without private source access
+        run: python -m unittest discover -s integration_tests -v
+      - name: Require explicit read access to private SkillForge
+        shell: bash
+        env:
+          WORKER_READ_TOKEN: ${{ secrets.SCOUT_SKILLFORGE_READ_TOKEN }}
+        run: |
+          if [ -z "$WORKER_READ_TOKEN" ]; then
+            echo "::error::Set SCOUT_SKILLFORGE_READ_TOKEN with read-only Contents access to x3-team/SkillForge. Real worker tests and measured Windows/Linux runs have not run."
+            exit 1
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: x3-team/SkillForge
+          ref: fa57ef94ce64539f19f8fdd75210a5d25ebb2da8
+          path: .ci-skillforge
+          persist-credentials: false
+          token: ${{ secrets.SCOUT_SKILLFORGE_READ_TOKEN }}
       - name: Supervisor failures and actual public worker tests
         env:
           SKILLFORGE_ROOT: ${{ github.workspace }}/.ci-skillforge
@@ -33,7 +45,7 @@ jobs:
       - name: Four actual one-goal runs and canonical report validation
         run: python scripts/check_goal_bridge.py --skillforge-root .ci-skillforge --output-dir runs/goal-bridge
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && hashFiles('runs/goal-bridge/summary.json') != ''
         with:
           name: scout-goal-bridge-${{ matrix.os }}-${{ matrix.python }}
           path: runs/goal-bridge/

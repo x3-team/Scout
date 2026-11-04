@@ -119,6 +119,25 @@ class BridgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):decode(b'['*40+b'0'+b']'*40)
 
     @unittest.skipUnless(os.environ.get('SKILLFORGE_ROOT'),'separate pinned SkillForge checkout required')
+    def test_public_worker_inspection_uses_canonical_stop_label(self):
+        session = session_for(self.scenario,1,'inspection-epoch')
+        c = ProcessController([sys.executable,'-m','skillforge.scout_worker'],
+                              cwd=os.environ['SKILLFORGE_ROOT'])
+        try:
+            c.start(session)
+            obs = observation_for(DigitalProbeRobot(self.scenario,1).read(),0,session)
+            obs['motion_enabled'] = False
+            reply = c.act(obs)
+            self.assertEqual(reply['limitation'],'inspection-stop')
+            self.assertIsNone(reply['raw_action'])
+            self.assertEqual(reply['command']['mode'],'stop')
+            self.assertEqual(reply['command']['velocity'],dict(v_mps=0,omega_rad_s=0))
+            self.assertTrue(reply['local_stop_required'])
+        finally:
+            c.close()
+        self.assertFalse(c.alive)
+
+    @unittest.skipUnless(os.environ.get('SKILLFORGE_ROOT'),'separate pinned SkillForge checkout required')
     def test_unknown_stop_and_invalid_telemetry_are_honest(self):
         class NoStop(DigitalProbeRobot):
             def stop(self):

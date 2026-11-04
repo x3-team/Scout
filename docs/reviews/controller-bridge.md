@@ -61,3 +61,9 @@ CI Windows/Linux нового head проверяется отдельно. Ож
 Изменения изолированы в новой ветке, stacked draft на PR #4. Ветки #1/#2/#4,
 main/gh-pages и SkillForge не изменяются; issue #3 остаётся открытой. Merge,
 закупки, реальное оборудование, камеры, сетевой сервис и расходы не запускались.
+
+## Worker revision and CI follow-up
+
+SkillForge PR #12 advanced to `fa57ef94ce64539f19f8fdd75210a5d25ebb2da8`: disabled-motion replies now use canonical `inspection-stop`, replacing incompatible `motion-disabled`. The Scout response guard is updated, and a real-process regression checks the stopped acknowledgement. Canonical draft.3 remains unchanged. The earlier archive above remains a historical measurement of the original worker, not evidence for the new revision.
+
+At Scout head `44cc64fe154ed8290232d78e5157d05bdaaa927b`, 13 existing CI jobs passed; four new bridge jobs failed at the private SkillForge checkout before tests. Logs report Repository not found because the default Scout token has no access to private SkillForge. The workflow now runs independent supervisor tests first and clearly requires a read-only `SCOUT_SKILLFORGE_READ_TOKEN`. This is an access blocker, not a passing integration check. SkillForge revision fa57ef94 has all 9 CI jobs successful (Core 41878009133, contract review 41878009124).

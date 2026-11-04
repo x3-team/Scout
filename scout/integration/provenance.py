@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 
-SKILLFORGE_REF = '0df4b22fd8c01f526be3212acea362af2d52f1be'
+SKILLFORGE_REF = 'fa57ef94ce64539f19f8fdd75210a5d25ebb2da8'
 
 
 def canonical(value):

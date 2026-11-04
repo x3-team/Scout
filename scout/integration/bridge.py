@@ -294,7 +294,7 @@ class ProcessController:
         need(command['mode'] == ('stop' if v['v_mps'] == 0 and v['omega_rad_s'] == 0 else 'drive'),'command mode')
         if not obs['motion_enabled']:
             need(raw is None and v == {'v_mps':0,'omega_rad_s':0} and reply['local_stop_required'] is True
-                 and reply['limitation'] == 'motion-disabled','unsafe disabled-motion response')
+                 and reply['limitation'] == 'inspection-stop','unsafe disabled-motion response')
             return
         need(isinstance(raw,dict) and set(raw) == {'v_mps','omega_rad_s'} and all(finite(v) for v in raw.values()),'raw action fields')
         need(v == {'v_mps':min(.15,max(0,raw['v_mps'])),'omega_rad_s':min(.8,max(-.8,raw['omega_rad_s']))},'raw/normalization mismatch')

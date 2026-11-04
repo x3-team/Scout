@@ -5,6 +5,7 @@ on:
     paths:
       - 'docs/integration/**'
       - 'scripts/check_integration_contract.py'
+      - 'scripts/check_contract_clock.py'
       - '.github/workflows/integration-contract.yml'
 
 permissions:
@@ -22,3 +23,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/check_integration_contract.py
+      - run: python scripts/check_contract_clock.py --output runs/contract-clock-check.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scout-contract-clock-${{ matrix.os }}
+          path: runs/contract-clock-check.json
+          if-no-files-found: error

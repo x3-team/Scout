@@ -2,7 +2,7 @@
   "notice": "FORMAT EXAMPLES ONLY; not measured integration results.",
   "base": {
     "session": {
-      "schema_version": "scout-skillforge/0.1-draft.1",
+      "schema_version": "scout-skillforge/0.1-draft.2",
       "session_id": "format-example-seed-1",
       "type": "session",
       "profile": "digital_known_map",
@@ -39,7 +39,7 @@
       }
     },
     "observation": {
-      "schema_version": "scout-skillforge/0.1-draft.1",
+      "schema_version": "scout-skillforge/0.1-draft.2",
       "session_id": "format-example-seed-1",
       "type": "observation",
       "step": 0,
@@ -61,7 +61,7 @@
       "sampled_at_s": 0
     },
     "command": {
-      "schema_version": "scout-skillforge/0.1-draft.1",
+      "schema_version": "scout-skillforge/0.1-draft.2",
       "session_id": "format-example-seed-1",
       "type": "command",
       "step": 0,
@@ -71,7 +71,7 @@
       "omega_rad_s": 0
     },
     "result": {
-      "schema_version": "scout-skillforge/0.1-draft.1",
+      "schema_version": "scout-skillforge/0.1-draft.2",
       "session_id": "format-example-seed-1",
       "type": "result",
       "execution": "contract_example",

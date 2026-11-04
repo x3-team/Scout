@@ -1,0 +1,42 @@
+{
+  "kind": "contract-clock-regression",
+  "execution": "contract_fixture_checks",
+  "schema_version": "scout-skillforge/0.1-draft.2",
+  "upstream_base_ref": "10817add66e15730f89599375132b2c08a4473f0",
+  "skillforge_review_ref": "969ed414a761b701f21559ac68edcf9b7ac27b6b",
+  "schema_sha256": "ae1763a89fc147ee33d1c750736965a8e25473e7ec43316ac58da2e0bb5904e9",
+  "examples_sha256": "cacfd2cad709d6ac9910fef913c89920bb14ca052cb7820a767262e650b61f58",
+  "old_bounds_reproduce_R1": true,
+  "legal_clock_steps_passed": 3600,
+  "first_step": 0,
+  "last_step": 3599,
+  "last_time_s": 179.95000000000002,
+  "sensor_tolerance_positive_cases": [
+    "oldest-fresh",
+    "age-within-tolerance",
+    "future-within-tolerance"
+  ],
+  "negative_cases_rejected": [
+    "clock-is-not-180",
+    "sensor-is-not-180",
+    "clock-drift",
+    "future-sensor",
+    "stale-sensor",
+    "expired-command",
+    "ttl-exceeds-budget",
+    "late-command",
+    "duplicate-step",
+    "out-of-budget-step",
+    "negative-step",
+    "old-version",
+    "self-consistent-extra-step"
+  ],
+  "runtime_adapter_executed": false,
+  "poc_executed": false,
+  "contract_accepted": false,
+  "remaining_review_items": [
+    "R2",
+    "R4"
+  ],
+  "notice": "Generated format fixtures only; no measured mission or photograph accuracy."
+}

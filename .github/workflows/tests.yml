@@ -1,0 +1,58 @@
+name: Scout checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python: ['3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Behavioral tests
+        run: python -m unittest discover -s tests -v
+      - name: Generate and verify demonstration reports
+        run: python scripts/check_demos.py
+      - name: Replay JavaScript syntax
+        run: node --check runs/deviations.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scout-reports-${{ matrix.os }}-${{ matrix.python }}
+          path: runs/
+
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate offline reports
+        run: python scripts/check_demos.py
+      - name: Install isolated browser test tooling
+        run: npm install --prefix .ci-browser --no-save --package-lock=false playwright@1.56.1
+      - name: Install test Chromium
+        run: .ci-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Verify browser interactions and layout
+        run: node scripts/check_browser.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scout-browser-review
+          path: runs/

@@ -1,0 +1,1124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scout SkillForge digital contract draft.3; offline fixtures, no runtime",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/session"
+    },
+    {
+      "$ref": "#/$defs/observation"
+    },
+    {
+      "$ref": "#/$defs/command"
+    },
+    {
+      "$ref": "#/$defs/result"
+    },
+    {
+      "$ref": "#/$defs/experiment_report"
+    }
+  ],
+  "$defs": {
+    "velocity": {
+      "type": "object",
+      "required": [
+        "v_mps",
+        "omega_rad_s"
+      ],
+      "properties": {
+        "v_mps": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.15
+        },
+        "omega_rad_s": {
+          "type": "number",
+          "minimum": -0.8,
+          "maximum": 0.8
+        }
+      },
+      "additionalProperties": false
+    },
+    "raw_action": {
+      "type": "object",
+      "required": [
+        "v_mps",
+        "omega_rad_s"
+      ],
+      "properties": {
+        "v_mps": {
+          "type": "number"
+        },
+        "omega_rad_s": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "pose": {
+      "type": "object",
+      "required": [
+        "x_m",
+        "y_m",
+        "yaw_rad"
+      ],
+      "properties": {
+        "x_m": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "y_m": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "yaw_rad": {
+          "type": "number",
+          "minimum": -3.141592653589793,
+          "exclusiveMaximum": 3.141592653589793
+        }
+      },
+      "additionalProperties": false
+    },
+    "world": {
+      "type": "object",
+      "required": [
+        "width_m",
+        "height_m",
+        "radius_m",
+        "obstacles"
+      ],
+      "properties": {
+        "width_m": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 10
+        },
+        "height_m": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 10
+        },
+        "radius_m": {
+          "const": 0.14
+        },
+        "obstacles": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "required": [
+              "x_min",
+              "y_min",
+              "x_max",
+              "y_max"
+            ],
+            "properties": {
+              "x_min": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10
+              },
+              "y_min": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10
+              },
+              "x_max": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10
+              },
+              "y_max": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "required": [
+        "dt_s",
+        "max_steps",
+        "max_v_mps",
+        "max_omega_rad_s",
+        "stop_clearance_m",
+        "sensor_range_m",
+        "arrival_tolerance_m",
+        "controller_timeout_s"
+      ],
+      "properties": {
+        "dt_s": {
+          "const": 0.05
+        },
+        "max_steps": {
+          "const": 3600
+        },
+        "max_v_mps": {
+          "const": 0.15
+        },
+        "max_omega_rad_s": {
+          "const": 0.8
+        },
+        "stop_clearance_m": {
+          "const": 0.22
+        },
+        "sensor_range_m": {
+          "const": 1.0
+        },
+        "arrival_tolerance_m": {
+          "const": 0.025
+        },
+        "controller_timeout_s": {
+          "const": 1.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "plan_entry": {
+      "type": "object",
+      "required": [
+        "segment_id",
+        "target_id",
+        "x_m",
+        "y_m"
+      ],
+      "properties": {
+        "segment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "target_id": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "HOME"
+          ]
+        },
+        "x_m": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "y_m": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        }
+      },
+      "additionalProperties": false
+    },
+    "stop": {
+      "type": "object",
+      "required": [
+        "attempted",
+        "confirmed",
+        "telemetry"
+      ],
+      "properties": {
+        "attempted": {
+          "type": "boolean"
+        },
+        "confirmed": {
+          "type": "boolean"
+        },
+        "telemetry": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "v_mps",
+                "omega_rad_s"
+              ],
+              "properties": {
+                "v_mps": {
+                  "type": "number"
+                },
+                "omega_rad_s": {
+                  "type": "number"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "outcome": {
+      "type": "object",
+      "required": [
+        "status",
+        "reason"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "completed",
+            "blocked",
+            "timeout",
+            "fault"
+          ]
+        },
+        "reason": {
+          "enum": [
+            "GOAL_REACHED",
+            "PATH_BLOCKED",
+            "MISSION_TIMEOUT",
+            "STOP_NOT_CONFIRMED",
+            "FOOTPRINT_GUARD",
+            "INVALID_OBSERVATION",
+            "LOCALIZATION_UNAVAILABLE",
+            "SENSOR_UNAVAILABLE",
+            "STALE_SENSOR",
+            "CONTROLLER_TIMEOUT",
+            "CONTROLLER_EXCEPTION",
+            "INVALID_COMMAND",
+            "RUNNER_EXCEPTION"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "session": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "trial_id",
+        "epoch",
+        "type",
+        "profile_id",
+        "frame",
+        "profile",
+        "seed",
+        "controller",
+        "world",
+        "start_pose",
+        "plan",
+        "provenance"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.3"
+        },
+        "trial_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "session"
+        },
+        "profile_id": {
+          "const": "digital_known_map"
+        },
+        "frame": {
+          "const": "lab_x_right_y_up_yaw_ccw"
+        },
+        "profile": {
+          "$ref": "#/$defs/profile"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "controller": {
+          "type": "object",
+          "required": [
+            "id",
+            "version"
+          ],
+          "properties": {
+            "id": {
+              "const": "goal_seeker"
+            },
+            "version": {
+              "const": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "world": {
+          "$ref": "#/$defs/world"
+        },
+        "start_pose": {
+          "$ref": "#/$defs/pose"
+        },
+        "plan": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/plan_entry"
+          },
+          "maxItems": 4,
+          "minItems": 1
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "pose",
+            "map",
+            "range",
+            "computer_vision_executed"
+          ],
+          "properties": {
+            "pose": {
+              "const": "ideal_simulation"
+            },
+            "map": {
+              "const": "ideal_static_map"
+            },
+            "range": {
+              "const": "synthetic_body_clearance"
+            },
+            "computer_vision_executed": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "observation": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "trial_id",
+        "epoch",
+        "type",
+        "segment_id",
+        "target_id",
+        "step",
+        "time_s",
+        "pose",
+        "velocity",
+        "motion_enabled",
+        "sensor_status",
+        "front_body_clearance_m",
+        "sampled_at_s"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.3"
+        },
+        "trial_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "observation"
+        },
+        "segment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "target_id": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "HOME"
+          ]
+        },
+        "step": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3600
+        },
+        "time_s": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180.000000001
+        },
+        "pose": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/pose"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "velocity": {
+          "$ref": "#/$defs/velocity"
+        },
+        "motion_enabled": {
+          "type": "boolean"
+        },
+        "sensor_status": {
+          "enum": [
+            "valid",
+            "unavailable"
+          ]
+        },
+        "front_body_clearance_m": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sampled_at_s": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180.000000001
+        }
+      },
+      "additionalProperties": false
+    },
+    "command": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "trial_id",
+        "epoch",
+        "type",
+        "segment_id",
+        "target_id",
+        "step",
+        "expires_after_step",
+        "mode",
+        "velocity"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.3"
+        },
+        "trial_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "command"
+        },
+        "segment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "target_id": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "HOME"
+          ]
+        },
+        "step": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3599
+        },
+        "expires_after_step": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "mode": {
+          "enum": [
+            "drive",
+            "stop"
+          ]
+        },
+        "velocity": {
+          "$ref": "#/$defs/velocity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "trial_id",
+        "epoch",
+        "type",
+        "segment_id",
+        "target_id",
+        "start_step",
+        "end_step",
+        "scope",
+        "outcome",
+        "stop_confirmed",
+        "metrics"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.3"
+        },
+        "trial_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "result"
+        },
+        "segment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "target_id": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "HOME"
+          ]
+        },
+        "start_step": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3600
+        },
+        "end_step": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3600
+        },
+        "scope": {
+          "const": "segment"
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "stop_confirmed": {
+          "type": "boolean"
+        },
+        "metrics": {
+          "type": "object",
+          "required": [
+            "steps",
+            "duration_s",
+            "distance_m",
+            "collision_guard_activations"
+          ],
+          "properties": {
+            "steps": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3600
+            },
+            "duration_s": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 180
+            },
+            "distance_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 27
+            },
+            "collision_guard_activations": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3600
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "trace_entry": {
+      "type": "object",
+      "required": [
+        "observation",
+        "phase",
+        "raw_action",
+        "requested",
+        "rejected_response",
+        "applied",
+        "limitation",
+        "advance",
+        "guard_activated",
+        "controller_fault",
+        "local_stop"
+      ],
+      "properties": {
+        "observation": {
+          "$ref": "#/$defs/observation"
+        },
+        "phase": {
+          "enum": [
+            "navigate",
+            "inspection",
+            "terminal",
+            "interrupted"
+          ]
+        },
+        "raw_action": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/raw_action"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requested": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/command"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rejected_response": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "applied": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/velocity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitation": {
+          "enum": [
+            "none",
+            "controller-normalized",
+            "inspection-stop",
+            "safety-stop",
+            "interrupted"
+          ]
+        },
+        "advance": {
+          "type": "boolean"
+        },
+        "guard_activated": {
+          "type": "boolean"
+        },
+        "controller_fault": {
+          "oneOf": [
+            {
+              "enum": [
+                "CONTROLLER_TIMEOUT",
+                "CONTROLLER_EXCEPTION",
+                "INVALID_COMMAND"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "local_stop": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/stop"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "commit",
+        "source_sha256"
+      ],
+      "properties": {
+        "commit": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "scene": {
+      "type": "object",
+      "required": [
+        "world",
+        "start_pose",
+        "plan",
+        "sensor_noise_m",
+        "sensor_failure_at_s"
+      ],
+      "properties": {
+        "world": {
+          "$ref": "#/$defs/world"
+        },
+        "start_pose": {
+          "$ref": "#/$defs/pose"
+        },
+        "plan": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/plan_entry"
+          },
+          "maxItems": 4,
+          "minItems": 1
+        },
+        "sensor_noise_m": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.01
+        },
+        "sensor_failure_at_s": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 180
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "manifest": {
+      "type": "object",
+      "required": [
+        "trial_id",
+        "epoch",
+        "wire_revision",
+        "wire_schema_sha256",
+        "sources",
+        "scene",
+        "scene_sha256",
+        "seed",
+        "profile",
+        "normalization",
+        "environment"
+      ],
+      "properties": {
+        "trial_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "wire_revision": {
+          "const": "scout-skillforge/0.1-draft.3"
+        },
+        "wire_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sources": {
+          "type": "object",
+          "required": [
+            "scout",
+            "skillforge"
+          ],
+          "properties": {
+            "scout": {
+              "$ref": "#/$defs/source"
+            },
+            "skillforge": {
+              "$ref": "#/$defs/source"
+            }
+          },
+          "additionalProperties": false
+        },
+        "scene": {
+          "$ref": "#/$defs/scene"
+        },
+        "scene_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "seed": {
+          "type": "object",
+          "required": [
+            "value",
+            "derivation"
+          ],
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "derivation": {
+              "const": "identity-u64-v1"
+            }
+          },
+          "additionalProperties": false
+        },
+        "profile": {
+          "$ref": "#/$defs/profile"
+        },
+        "normalization": {
+          "const": "si-lab-yaw-clamp-v1"
+        },
+        "environment": {
+          "type": "object",
+          "required": [
+            "python",
+            "os"
+          ],
+          "properties": {
+            "python": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "os": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "experiment_report": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "trial_id",
+        "epoch",
+        "type",
+        "execution",
+        "session",
+        "manifest",
+        "plan",
+        "trace",
+        "results",
+        "not_started_segments",
+        "missing_results",
+        "report_complete",
+        "last_confirmed_step",
+        "outcome",
+        "stop",
+        "error"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "scout-skillforge/0.1-draft.3"
+        },
+        "trial_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "epoch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "type": {
+          "const": "experiment_report"
+        },
+        "execution": {
+          "enum": [
+            "contract_example",
+            "digital_simulation"
+          ]
+        },
+        "session": {
+          "$ref": "#/$defs/session"
+        },
+        "manifest": {
+          "$ref": "#/$defs/manifest"
+        },
+        "plan": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/plan_entry"
+          },
+          "maxItems": 4,
+          "minItems": 1
+        },
+        "trace": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/trace_entry"
+          },
+          "maxItems": 3601,
+          "minItems": 0
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/result"
+          },
+          "maxItems": 4,
+          "minItems": 0
+        },
+        "not_started_segments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "maxItems": 4,
+          "minItems": 0
+        },
+        "missing_results": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "maxItems": 4,
+          "minItems": 0
+        },
+        "report_complete": {
+          "type": "boolean"
+        },
+        "last_confirmed_step": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3600
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "stop": {
+          "$ref": "#/$defs/stop"
+        },
+        "error": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "code",
+                "at_step",
+                "message"
+              ],
+              "properties": {
+                "code": {
+                  "enum": [
+                    "STOP_NOT_CONFIRMED",
+                    "FOOTPRINT_GUARD",
+                    "INVALID_OBSERVATION",
+                    "LOCALIZATION_UNAVAILABLE",
+                    "SENSOR_UNAVAILABLE",
+                    "STALE_SENSOR",
+                    "CONTROLLER_TIMEOUT",
+                    "CONTROLLER_EXCEPTION",
+                    "INVALID_COMMAND",
+                    "RUNNER_EXCEPTION"
+                  ]
+                },
+                "at_step": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 3600
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

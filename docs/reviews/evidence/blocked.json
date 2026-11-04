@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0",
+  "scout_version": "0.1.0",
+  "scenario": "blocked",
+  "scenario_sha256": "8beef14c95a279530274c79f98b78f95bf4b479ce29fe6e38281184beb7b0fb2",
+  "seed": 1,
+  "execution": "digital_simulation",
+  "clock": "simulation_seconds",
+  "evidence": {
+    "source": "scenario_fixture",
+    "synthetic": true,
+    "computer_vision_executed": false,
+    "notice": "Prepared synthetic deviations; not camera or computer vision results."
+  },
+  "status": "BLOCKED",
+  "reason": "PATH_BLOCKED",
+  "visited_stations": [],
+  "planned_stations": [
+    "A",
+    "B",
+    "C"
+  ],
+  "returned_home": false,
+  "stopped": true,
+  "metrics": {
+    "duration_s": 3.6,
+    "distance_m": 0.54,
+    "visited_count": 0,
+    "changed_station_count": 0,
+    "completion_ratio": 0.0,
+    "min_front_clearance_m": 0.218174,
+    "collision_guard_activations": 0,
+    "simulated_contacts": 0,
+    "control_steps": 72
+  },
+  "final_pose": {
+    "x": 1.1400000000000003,
+    "y": 0.6,
+    "heading": 0.0
+  },
+  "inspections": [],
+  "events": [
+    {
+      "time_s": 0.0,
+      "type": "MISSION_STARTED",
+      "scenario": "blocked"
+    },
+    {
+      "time_s": 3.6,
+      "type": "SAFETY_STOP",
+      "reason": "PATH_BLOCKED",
+      "target": "A"
+    },
+    {
+      "time_s": 3.6,
+      "type": "MISSION_FINISHED",
+      "status": "BLOCKED",
+      "reason": "PATH_BLOCKED"
+    }
+  ],
+  "trace": [
+    {
+      "time_s": 0.0,
+      "x": 0.6,
+      "y": 0.6,
+      "heading": 0,
+      "state": "PRECHECK"
+    },
+    {
+      "time_s": 0.2,
+      "x": 0.63,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 0.4,
+      "x": 0.66,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 0.6,
+      "x": 0.69,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 0.8,
+      "x": 0.72,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 1.0,
+      "x": 0.75,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 1.2,
+      "x": 0.78,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 1.4,
+      "x": 0.81,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 1.6,
+      "x": 0.84,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 1.8,
+      "x": 0.87,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 2.0,
+      "x": 0.9,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 2.2,
+      "x": 0.93,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 2.4,
+      "x": 0.96,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 2.6,
+      "x": 0.99,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 2.8,
+      "x": 1.02,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 3.0,
+      "x": 1.05,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 3.2,
+      "x": 1.08,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 3.4,
+      "x": 1.11,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 3.6,
+      "x": 1.14,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "NAVIGATE"
+    },
+    {
+      "time_s": 3.6,
+      "x": 1.14,
+      "y": 0.6,
+      "heading": 0.0,
+      "state": "BLOCKED"
+    }
+  ],
+  "world": {
+    "name": "blocked",
+    "width": 3,
+    "height": 2.4,
+    "start": {
+      "x": 0.6,
+      "y": 0.6,
+      "heading": 0
+    },
+    "stations": [
+      {
+        "id": "A",
+        "x": 2.4,
+        "y": 0.6,
+        "deviations": []
+      },
+      {
+        "id": "B",
+        "x": 2.4,
+        "y": 1.8,
+        "deviations": []
+      },
+      {
+        "id": "C",
+        "x": 0.6,
+        "y": 1.8,
+        "deviations": []
+      }
+    ],
+    "obstacles": [
+      {
+        "id": "shelf",
+        "x": 1.1,
+        "y": 1,
+        "width": 0.7,
+        "height": 0.4
+      },
+      {
+        "id": "blocking_box",
+        "x": 1.5,
+        "y": 0.3,
+        "width": 0.25,
+        "height": 0.6
+      }
+    ],
+    "robot": {
+      "radius_m": 0.14,
+      "wheel_radius_m": 0.04,
+      "axle_track_m": 0.18,
+      "max_speed_mps": 0.15,
+      "max_turn_rps": 0.8
+    },
+    "dt_s": 0.05,
+    "max_duration_s": 180.0,
+    "sensor_range_m": 1.0,
+    "sensor_noise_m": 0.002,
+    "stop_clearance_m": 0.22,
+    "arrival_tolerance_m": 0.025,
+    "sensor_failure_at_s": null
+  },
+  "limitations": [
+    "Ideal simulated pose; no measured odometry or ArUco localization.",
+    "Instant simulated braking; no claim about physical stopping distance.",
+    "Circular footprint and planar static obstacles; no automatic detour.",
+    "Fixture inspection does not measure computer vision accuracy."
+  ]
+}

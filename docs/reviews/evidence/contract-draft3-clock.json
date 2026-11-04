@@ -1,0 +1,11 @@
+{
+  "kind": "draft3-clock-regression",
+  "old_R1_reproduced": true,
+  "legal_advance_steps": 3600,
+  "terminal_observation_step": 3600,
+  "terminal_time_s": 180.0,
+  "sensor_tolerance_cases": 5,
+  "contract_accepted": false,
+  "runtime_adapter_executed": false,
+  "poc_executed": false
+}

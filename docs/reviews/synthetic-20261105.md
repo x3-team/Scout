@@ -21,3 +21,11 @@ Python 3.12/3.13, из Scout: установить requirements-vision.txt, за
 ## Ограничения
 
 Синтетика проверяет регрессии программы и заданные сочетания искажений. Она не измеряет точность на фотографиях, не обучает модель и не закрывает ручной Gate1/SCOUT-02. Реальные фото, отдельная evaluation выборка и ручной Windows-путь остаются следующими проверками. Нельзя переносить проценты прохождения этой матрицы на склад/камеру/железо. Текущий CI и повтор full-route фиксируются в PR после выполнения.
+
+## Повтор полной связки после расширения стенда
+
+На Scout code ref d0b089fa9d4c7ea8f9416b4cdd71c704ff7b9c3c побитово сверены все 86 tracked файлов; worker по-прежнему fa57ef94ce64539f19f8fdd75210a5d25ebb2da8 с полным source receipt. Новый measured CLI выполнил 8 основных парных сценариев +8 повторов: все 16 приняты, все 8 repeat checks успешны. [Новый summary с manifest/source digests](evidence/synthetic-20261105/route-summary.json). Исходы и метрики совпали с прежним полным checkpoint, который сохраняет полный сырой [архив](evidence/route-bridge/paired-route-adecc83a.zip); новый summary не подменяет его происхождение.
+
+Дополнительно повторены все 12 профильных worker unittest. Итого на этой проверке **87 unittest: 30 Scout core +20 integration +25 vision +12 worker**, без пропусков. Отдельно от unittest: 60 image cases и 56 repeats, 16 full-route executions, 9 vision CLI demo и4 motion CLI demo,22 положительных/148 отрицательных/5 strict JSON contract cases и3600 законных clock steps с terminal3600. Это не 87 независимых миров: категории и повторы перечислены раздельно.
+
+Следующий commit добавляет только этот текст и результат full-route; код тестируемой программы и нового стенда остаётся code ref выше. Актуальные CI run/job IDs фиксируются в PR #8 после выполнения. Ветки #1/#2/#4, main, SkillForge не изменяются.

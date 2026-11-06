@@ -1,5 +1,10 @@
 # Scout
 
+**Архитектурное правило Solentica Tech:** [ARCH-SCOUT-SKILLFORGE-01](docs/decisions/ARCH-SCOUT-SKILLFORGE-01.md).
+Scout отвечает за конкретного робота, миссии, датчики, инспекции, проверку и
+безопасное исполнение. SkillForge предоставляет исследуемые алгоритмы через
+версионированный контракт. Правило обязательно для следующих изменений.
+
 **INTEGRATION-02C:** [полный маршрут и парное сравнение](docs/integration/route-bridge.md)
 через публичный JSON-процесс SkillForge, [checkpoint](docs/reviews/route-bridge.md).
 Сохранён [предыдущий одноцелевой checkpoint](docs/reviews/controller-bridge.md).

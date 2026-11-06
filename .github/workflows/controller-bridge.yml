@@ -1,0 +1,30 @@
+name: Scout controller supervisor
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+# Actual worker + paired-route acceptance runs in private SkillForge with its
+# ordinary read-only token, pinned to both reviewed code commits. No extra secret.
+# https://github.com/x3-team/SkillForge/pull/13
+# https://github.com/x3-team/SkillForge/actions/runs/41884975702
+jobs:
+  supervisor:
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Independent tests (real-worker tests run separately in SkillForge)
+        run: python -m unittest discover -s integration_tests -v

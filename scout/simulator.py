@@ -11,12 +11,12 @@ def wrap_angle(angle: float) -> float:
 
 def integrate(pose: Pose, linear: float, angular: float, dt: float) -> Pose:
     heading = pose.heading + angular * dt
-    if abs(angular) < 1e-10:
-        x = pose.x + linear * dt * math.cos(pose.heading)
-        y = pose.y + linear * dt * math.sin(pose.heading)
-    else:
-        x = pose.x + linear / angular * (math.sin(heading) - math.sin(pose.heading))
-        y = pose.y - linear / angular * (math.cos(heading) - math.cos(pose.heading))
+    # Exact arc in midpoint/sinc form: subtracting nearly equal sin/cos values
+    # and multiplying by v/omega loses precision as omega approaches zero.
+    half_turn = angular * dt / 2
+    chord = linear * dt * (math.sin(half_turn) / half_turn if half_turn else 1.0)
+    x = pose.x + chord * math.cos(pose.heading + half_turn)
+    y = pose.y + chord * math.sin(pose.heading + half_turn)
     return Pose(x, y, wrap_angle(heading))
 
 

@@ -1,0 +1,65 @@
+{
+  "kind": "scout-skillforge-one-goal-checkpoint",
+  "sources": {
+    "scout": {
+      "commit": "891f46ea1e38ccba314910c02e043ee6a7c0e1ea",
+      "source_sha256": "a8de0f3a4649ef122e649a44bdef52635d8fb10d66695a490b795abfbca47321"
+    },
+    "skillforge": {
+      "commit": "fa57ef94ce64539f19f8fdd75210a5d25ebb2da8",
+      "source_sha256": "f1f091fae94af5e7052bec01bce1e4cb69eb0bc90015d96226898a003295d949"
+    }
+  },
+  "cases": [
+    {
+      "case": "forward",
+      "status": "completed",
+      "reason": "GOAL_REACHED",
+      "steps": 237,
+      "duration_s": 11.850000000000001,
+      "distance_m": 1.7774999999999963,
+      "collision_guard_activations": 0,
+      "stop_confirmed": true,
+      "report_sha256": "0c75e5a2fbe6c9fba26b0aa69633ba6f3e058c6d52b1a1699f8663d1ccf24109"
+    },
+    {
+      "case": "turn",
+      "status": "completed",
+      "reason": "GOAL_REACHED",
+      "steps": 193,
+      "duration_s": 9.65,
+      "distance_m": 1.1774993218143408,
+      "collision_guard_activations": 0,
+      "stop_confirmed": true,
+      "report_sha256": "8a20959972aa24b791792708ce5a8327dfea35b3f6b421b5e1309ee62511841f"
+    },
+    {
+      "case": "blocked",
+      "status": "blocked",
+      "reason": "PATH_BLOCKED",
+      "steps": 72,
+      "duration_s": 3.6,
+      "distance_m": 0.5400000000000004,
+      "collision_guard_activations": 0,
+      "stop_confirmed": true,
+      "report_sha256": "563975653fb79c214595fdfb2c9c383897ab6060789935fa44f82ee37c1a8ffd"
+    },
+    {
+      "case": "sensor-failure",
+      "status": "fault",
+      "reason": "SENSOR_UNAVAILABLE",
+      "steps": 40,
+      "duration_s": 2.0,
+      "distance_m": 0.3000000000000025,
+      "collision_guard_activations": 0,
+      "stop_confirmed": true,
+      "report_sha256": "a17983806a0c71ac94e9cba98e515c3dfe29bf9322a58282d08a851fddb3bc30"
+    }
+  ],
+  "single_goal_integration_executed": true,
+  "physics_owner": "Scout SimRobot",
+  "full_route_A_B_C_HOME_executed": false,
+  "baseline_comparison_executed": false,
+  "hardware_executed": false,
+  "notice": "Four actual single-goal process/physics runs; not full mission acceptance."
+}

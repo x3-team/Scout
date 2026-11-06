@@ -1,5 +1,15 @@
 # INTEGRATION-01B — проект интеграции Scout ↔ SkillForge
 
+Обязательные границы дальнейшей разработки:
+[ARCH-SCOUT-SKILLFORGE-01](../decisions/ARCH-SCOUT-SKILLFORGE-01.md).
+Команда внешнего контроллера — предложение, проверяемое Scout до привода.
+Согласованные draft.3/schema digest и consumer pins этим решением не меняются.
+
+После принятия draft.3 обеими сторонами начат отдельно разрешённый runtime-этап:
+[INTEGRATION-02C — полный маршрут и парное сравнение](route-bridge.md),
+[checkpoint](../reviews/route-bridge.md). Состояния ниже относятся к истории
+подготовки контракта; новая работа изолирована от веток текущих PR #1/#2/#4.
+
 Актуальная canonical-ревизия: [draft.3](contract-v0.md),
 [чекпоинт и исходные проверки](../reviews/contract-draft3.md). Включены принятые
 как требования R2/R4/SCOUT-C1 из SkillForge ref
